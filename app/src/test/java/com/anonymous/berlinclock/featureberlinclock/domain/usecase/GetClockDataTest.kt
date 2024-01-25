@@ -79,4 +79,13 @@ class GetClockDataTest {
         expectedLamps[0] = LampColour.RED
         assertThat(getClockData.getTopHourLamps(hour = 5) == expectedLamps).isTrue()
     }
+
+    @Test
+    fun `first top hour lamb is ON when hour is from 5 to 9`() {
+        val expectedLamps = MutableList(4) { LampColour.OFF }
+        expectedLamps[0] = LampColour.RED
+        (5..9).forEach {
+            assertThat(getClockData.getTopHourLamps(hour = it) == expectedLamps).isTrue()
+        }
+    }
 }
