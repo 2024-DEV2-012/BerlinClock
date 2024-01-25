@@ -29,5 +29,11 @@ class GetClockData {
                 MESSAGE_INPUT_LESS_THAN_0
             )
         }
+
+        if (hour > 23) {
+            throw RuntimeException(
+                "The input is greater than the maximum value, which is 23"
+            )
+        }
     }
 }
