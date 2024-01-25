@@ -1,5 +1,6 @@
 package com.anonymous.berlinclock.featureberlinclock.domain.usecase
 
+import android.content.pm.LauncherApps
 import com.anonymous.berlinclock.core.util.HOUR_MAX_VALUE
 import com.anonymous.berlinclock.core.util.LampColour
 import com.anonymous.berlinclock.core.util.MESSAGE_INPUT_GREATER_THAN_23
@@ -31,7 +32,11 @@ class GetClockData {
                 if (hour < TIME_MIN_VALUE) MESSAGE_INPUT_LESS_THAN_0 else MESSAGE_INPUT_GREATER_THAN_23
             )
         }
-        return List(4) { LampColour.OFF }
+        val lamps = MutableList(4) { LampColour.OFF }
+        if (hour == 5) {
+            lamps[0] = LampColour.RED
+        }
+        return lamps
     }
 
 }
