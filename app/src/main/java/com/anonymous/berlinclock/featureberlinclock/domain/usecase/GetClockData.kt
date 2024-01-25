@@ -21,8 +21,20 @@ import com.anonymous.berlinclock.core.util.getQuotient
 import com.anonymous.berlinclock.core.util.getReminder
 import com.anonymous.berlinclock.core.util.isEven
 import com.anonymous.berlinclock.core.util.isMultipleOfThree
+import com.anonymous.berlinclock.featureberlinclock.domain.model.BerlinClock
 
 class GetClockData {
+
+    operator fun invoke(time: String): BerlinClock {
+        return BerlinClock(
+            secondLamp = LampColour.YELLOW,
+            topHourLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF },
+            bottomHourLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF },
+            topMinuteLamps = MutableList(TOP_MIN_LAMP_COUNT) { LampColour.OFF },
+            bottomMinuteLamps = MutableList(BOTTOM_MIN_LAMP_COUNT) { LampColour.OFF },
+            normalTime = time
+        )
+    }
 
     fun getSecondLamp(seconds: Int): SecondLamp {
         checkValidInputBounds(seconds)

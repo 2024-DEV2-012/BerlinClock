@@ -10,6 +10,7 @@ import com.anonymous.berlinclock.core.util.MESSAGE_INPUT_LESS_THAN_0
 import com.anonymous.berlinclock.core.util.TIME_MAX_VALUE
 import com.anonymous.berlinclock.core.util.TIME_MIN_VALUE
 import com.anonymous.berlinclock.core.util.TOP_MIN_LAMP_COUNT
+import com.anonymous.berlinclock.featureberlinclock.domain.model.BerlinClock
 import com.google.common.truth.Truth.assertThat
 import org.junit.Assert.assertThrows
 import org.junit.Before
@@ -371,6 +372,22 @@ class GetClockDataTest {
         (4..59 step 5).forEach {
             assertThat(getClockData.getBottomMinuteLamps(minutes = it) == expectedLamps).isTrue()
         }
+    }
+
+
+    @Test
+    fun `should take the time 0 in string format and returns corresponding aggregate berlin time`() {
+        val timeString = "00:00:00"
+        val expectedRes = BerlinClock(
+            secondLamp = LampColour.YELLOW,
+            topHourLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF },
+            bottomHourLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF },
+            topMinuteLamps = MutableList(TOP_MIN_LAMP_COUNT) { LampColour.OFF },
+            bottomMinuteLamps = MutableList(BOTTOM_MIN_LAMP_COUNT) { LampColour.OFF },
+            normalTime = timeString
+        )
+        val berlinClock = getClockData(time = timeString)
+        assertThat(berlinClock == expectedRes).isTrue()
     }
 
 }
