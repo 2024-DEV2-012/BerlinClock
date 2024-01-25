@@ -220,4 +220,12 @@ class GetClockDataTest {
         }
         assertThat(exception).hasMessageThat().contains(MESSAGE_INPUT_GREATER_THAN_59)
     }
+
+    @Test
+    fun `all top minute lambs are OFF when minutes is in the range from 0 to 4`() {
+        val expectedResult = List(11) { LampColour.OFF }
+        (0..4).forEach {
+            assertThat(getClockData.getTopMinuteLamps(minutes = it) == expectedResult).isTrue()
+        }
+    }
 }
