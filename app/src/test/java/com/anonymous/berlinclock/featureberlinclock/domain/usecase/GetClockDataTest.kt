@@ -150,37 +150,45 @@ class GetClockDataTest {
     }
 
     @Test
-    fun `all bottom  hour lambs are OFF at midnight - 0 hour`() {
+    fun `all bottom  hour lambs are OFF when reminder for the hours divided by 5 is 0`() {
         val expectedResult = List(HOUR_LAMP_COUNT) { LampColour.OFF }
-        assertThat(getClockData.getBottomHourLamps(hour = 0) == expectedResult).isTrue()
+        (0..23 step 5).forEach {
+            assertThat(getClockData.getBottomHourLamps(hour = it) == expectedResult).isTrue()
+        }
     }
 
     @Test
-    fun `first bottom hour lamb is ON when hour is 1`() {
+    fun `first bottom hour lamb is ON when reminder for the hours divided by 5 is 1`() {
         val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         expectedLamps[0] = LampColour.RED
-        assertThat(getClockData.getBottomHourLamps(hour = 1) == expectedLamps).isTrue()
+        (1..23 step 5).forEach {
+            assertThat(getClockData.getBottomHourLamps(hour = it) == expectedLamps).isTrue()
+        }
     }
 
     @Test
-    fun `first two bottom hour lambs are ON when hour is 2`() {
+    fun `first two bottom hour lambs are ON when reminder for the hours divided by 5 is 2`() {
         val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         expectedLamps.apply {
             this[0] = LampColour.RED
             this[1] = LampColour.RED
         }
-        assertThat(getClockData.getBottomHourLamps(hour = 2) == expectedLamps).isTrue()
+        (2..23 step 5).forEach {
+            assertThat(getClockData.getBottomHourLamps(hour = it) == expectedLamps).isTrue()
+        }
     }
 
     @Test
-    fun `first three bottom hour lambs are ON when hour is 3`() {
+    fun `first three bottom hour lambs are ON when reminder for the hours divided by 5 is 3`() {
         val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         expectedLamps.apply {
             this[0] = LampColour.RED
             this[1] = LampColour.RED
             this[2] = LampColour.RED
         }
-        assertThat(getClockData.getBottomHourLamps(hour = 3) == expectedLamps).isTrue()
+        (3..23 step 5).forEach {
+            assertThat(getClockData.getBottomHourLamps(hour = it) == expectedLamps).isTrue()
+        }
     }
 
     @Test
