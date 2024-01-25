@@ -55,7 +55,11 @@ class GetClockData {
 
     fun getTopMinuteLamps(minutes: Int): TopMinuteLamps {
         checkValidInputBounds(minutes)
-        return MutableList(TOP_MIN_LAMP_COUNT) { LampColour.OFF }
+        val lamps = MutableList(TOP_MIN_LAMP_COUNT) { LampColour.OFF }
+        if (minutes in (5..9)) {
+            lamps[0] = LampColour.YELLOW
+        }
+        return lamps
     }
 
     private fun checkValidInputBounds(
