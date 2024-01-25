@@ -22,4 +22,12 @@ class GetClockData {
         }
         return if (seconds.isEven()) LampColour.YELLOW else LampColour.OFF
     }
+
+    fun getTopHourLamps(hour: Int) {
+        if (hour < TIME_MIN_VALUE) {
+            throw RuntimeException(
+                MESSAGE_INPUT_LESS_THAN_0
+            )
+        }
+    }
 }
