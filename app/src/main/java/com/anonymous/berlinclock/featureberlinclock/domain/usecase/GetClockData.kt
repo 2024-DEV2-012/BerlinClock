@@ -35,7 +35,7 @@ class GetClockData {
         val lamps = MutableList(4) { LampColour.OFF }
         if (hour in (5..9)) {
             lamps[0] = LampColour.RED
-        } else if(hour == 10) {
+        } else if (hour in (10..14)) {
             lamps[0] = LampColour.RED
             lamps[1] = LampColour.RED
         }
