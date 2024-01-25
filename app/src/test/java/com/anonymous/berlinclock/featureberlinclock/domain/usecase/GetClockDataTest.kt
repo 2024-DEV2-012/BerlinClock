@@ -250,4 +250,17 @@ class GetClockDataTest {
             assertThat(getClockData.getTopMinuteLamps(minutes = it) == expectedLamps).isTrue()
         }
     }
+
+    @Test
+    fun `first three top minute lambs are ON and third lamp is RED when minutes is in the range from 15 to 19`() {
+        val expectedLamps = MutableList(TOP_MIN_LAMP_COUNT) { LampColour.OFF }
+        expectedLamps.apply {
+            this[0] = LampColour.YELLOW
+            this[1] = LampColour.YELLOW
+            this[2] = LampColour.RED
+        }
+        (15..19).forEach {
+            assertThat(getClockData.getTopMinuteLamps(minutes = it) == expectedLamps).isTrue()
+        }
+    }
 }
