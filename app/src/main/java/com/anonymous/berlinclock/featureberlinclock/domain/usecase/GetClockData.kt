@@ -64,6 +64,12 @@ class GetClockData {
         return lamps
     }
 
+    fun getBottomMinuteLamps(minutes: Int) {
+        if (minutes < TIME_MIN_VALUE) {
+            throw RuntimeException(MESSAGE_INPUT_LESS_THAN_0)
+        }
+    }
+
     private fun checkValidInputBounds(
         inputTime: Int,
         maxValue: Int = TIME_MAX_VALUE,

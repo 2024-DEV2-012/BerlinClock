@@ -308,4 +308,12 @@ class GetClockDataTest {
             assertThat(getClockData.getTopMinuteLamps(minutes = it) == expectedLamps).isTrue()
         }
     }
+
+    @Test
+    fun `bottom minute lamp converter throws exception when the input is less than min value 0`() {
+        val exception = assertThrows(RuntimeException::class.java) {
+            getClockData.getBottomMinuteLamps(minutes = TIME_MIN_VALUE - 1)
+        }
+        assertThat(exception).hasMessageThat().contains(MESSAGE_INPUT_LESS_THAN_0)
+    }
 }
