@@ -140,4 +140,12 @@ class GetClockDataTest {
         }
         assertThat(exception).hasMessageThat().contains(MESSAGE_INPUT_LESS_THAN_0)
     }
+
+    @Test
+    fun `bottom hour lamps converter throws exception when the input is greater than max value 23`() {
+        val exception = assertThrows(RuntimeException::class.java) {
+            getClockData.getBottomHourLamps(hour = HOUR_MAX_VALUE + 1)
+        }
+        assertThat(exception).hasMessageThat().contains(MESSAGE_INPUT_GREATER_THAN_23)
+    }
 }

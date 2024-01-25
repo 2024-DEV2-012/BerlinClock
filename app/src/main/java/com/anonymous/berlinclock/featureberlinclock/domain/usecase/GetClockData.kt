@@ -43,8 +43,10 @@ class GetClockData {
     }
 
     fun getBottomHourLamps(hour: Int) {
-        if (hour < TIME_MIN_VALUE) {
-            throw RuntimeException(MESSAGE_INPUT_LESS_THAN_0)
+        if (hour < TIME_MIN_VALUE || hour > HOUR_MAX_VALUE) {
+            throw RuntimeException(
+                if (hour < TIME_MIN_VALUE) MESSAGE_INPUT_LESS_THAN_0 else MESSAGE_INPUT_GREATER_THAN_23
+            )
         }
     }
 
