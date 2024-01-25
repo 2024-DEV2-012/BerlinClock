@@ -1,5 +1,6 @@
 package com.anonymous.berlinclock.featureberlinclock.domain.usecase
 
+import com.anonymous.berlinclock.core.util.BOTTOM_MIN_LAMP_COUNT
 import com.anonymous.berlinclock.core.util.BottomHourLamps
 import com.anonymous.berlinclock.core.util.HOUR_LAMP_COUNT
 import com.anonymous.berlinclock.core.util.HOUR_MAX_VALUE
@@ -13,6 +14,7 @@ import com.anonymous.berlinclock.core.util.SecondLamp
 import com.anonymous.berlinclock.core.util.TIME_MIN_VALUE
 import com.anonymous.berlinclock.core.util.TOP_HOUR_LAMP_VALUE
 import com.anonymous.berlinclock.core.util.TOP_MIN_LAMP_COUNT
+import com.anonymous.berlinclock.core.util.TOP_MIN_LAMP_VALUE
 import com.anonymous.berlinclock.core.util.TopMinuteLamps
 import com.anonymous.berlinclock.core.util.getQuotient
 import com.anonymous.berlinclock.core.util.getReminder
@@ -33,8 +35,8 @@ class GetClockData {
             upperBoundMsg = MESSAGE_INPUT_GREATER_THAN_23
         )
         val lamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
-        val litLambCount = hour.getQuotient(TOP_HOUR_LAMP_VALUE)
-        for (i in 0 until litLambCount) {
+        val litLampCount = hour.getQuotient(TOP_HOUR_LAMP_VALUE)
+        for (i in 0 until litLampCount) {
             lamps[i] = LampColour.RED
         }
         return lamps
@@ -47,8 +49,8 @@ class GetClockData {
             upperBoundMsg = MESSAGE_INPUT_GREATER_THAN_23
         )
         val lamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
-        val litLambCount = hour.getReminder(TOP_HOUR_LAMP_VALUE)
-        for (i in 0 until litLambCount) {
+        val litLampCount = hour.getReminder(TOP_HOUR_LAMP_VALUE)
+        for (i in 0 until litLampCount) {
             lamps[i] = LampColour.RED
         }
         return lamps
@@ -57,8 +59,8 @@ class GetClockData {
     fun getTopMinuteLamps(minutes: Int): TopMinuteLamps {
         checkValidInputBounds(minutes)
         val lamps = MutableList(TOP_MIN_LAMP_COUNT) { LampColour.OFF }
-        val litLambCount = minutes.getQuotient(5)
-        for (i in 0 until litLambCount) {
+        val litLampCount = minutes.getQuotient(TOP_MIN_LAMP_VALUE)
+        for (i in 0 until litLampCount) {
             lamps[i] = if ((i + 1).isMultipleOfThree()) LampColour.RED else LampColour.YELLOW
         }
         return lamps
@@ -66,9 +68,9 @@ class GetClockData {
 
     fun getBottomMinuteLamps(minutes: Int): List<LampColour> {
         checkValidInputBounds(minutes)
-        val lamps = MutableList(4) { LampColour.OFF }
-        val litLambCount = minutes.getReminder(5)
-        for (i in 0 until litLambCount) {
+        val lamps = MutableList(BOTTOM_MIN_LAMP_COUNT) { LampColour.OFF }
+        val litLampCount = minutes.getReminder(TOP_MIN_LAMP_VALUE)
+        for (i in 0 until litLampCount) {
             lamps[i] = LampColour.YELLOW
         }
         return lamps

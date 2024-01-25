@@ -1,5 +1,6 @@
 package com.anonymous.berlinclock.featureberlinclock.domain.usecase
 
+import com.anonymous.berlinclock.core.util.BOTTOM_MIN_LAMP_COUNT
 import com.anonymous.berlinclock.core.util.HOUR_LAMP_COUNT
 import com.anonymous.berlinclock.core.util.HOUR_MAX_VALUE
 import com.anonymous.berlinclock.core.util.LampColour
@@ -39,7 +40,7 @@ class GetClockDataTest {
     }
 
     @Test
-    fun `second lamb is OFF for all the odd seconds`() {
+    fun `second lamp is OFF for all the odd seconds`() {
         (TIME_MIN_VALUE + 1..TIME_MAX_VALUE step 2).forEach {
             assertThat(getClockData.getSecondLamp(seconds = it) == LampColour.OFF).isTrue()
         }
@@ -47,7 +48,7 @@ class GetClockDataTest {
 
 
     @Test
-    fun `second lamb is ON for all the even seconds`() {
+    fun `second lamp is ON for all the even seconds`() {
         (TIME_MIN_VALUE..TIME_MAX_VALUE step 2).forEach {
             assertThat(getClockData.getSecondLamp(seconds = it) == LampColour.YELLOW).isTrue()
         }
@@ -70,20 +71,20 @@ class GetClockDataTest {
     }
 
     @Test
-    fun `all top hour lambs are OFF at midnight - 0 hour`() {
+    fun `all top hour lamps are OFF at midnight - 0 hour`() {
         val expectedResult = List(HOUR_LAMP_COUNT) { LampColour.OFF }
         assertThat(getClockData.getTopHourLamps(hour = 0) == expectedResult).isTrue()
     }
 
     @Test
-    fun `first top hour lamb is ON when hour is 5`() {
+    fun `first top hour lamp is ON when hour is 5`() {
         val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         expectedLamps[0] = LampColour.RED
         assertThat(getClockData.getTopHourLamps(hour = 5) == expectedLamps).isTrue()
     }
 
     @Test
-    fun `first top hour lamb is ON when hour is from 5 to 9`() {
+    fun `first top hour lamp is ON when hour is from 5 to 9`() {
         val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         expectedLamps[0] = LampColour.RED
         (5..9).forEach {
@@ -92,7 +93,7 @@ class GetClockDataTest {
     }
 
     @Test
-    fun `first two top hour lambs are ON when hour is 10`() {
+    fun `first two top hour lamps are ON when hour is 10`() {
         val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         expectedLamps.apply {
             this[0] = LampColour.RED
@@ -102,7 +103,7 @@ class GetClockDataTest {
     }
 
     @Test
-    fun `first two top hour lambs are ON when hour is from 10 to 14`() {
+    fun `first two top hour lamps are ON when hour is from 10 to 14`() {
         val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         expectedLamps.apply {
             this[0] = LampColour.RED
@@ -114,7 +115,7 @@ class GetClockDataTest {
     }
 
     @Test
-    fun `first three top hour lambs are ON when hour is from 15 to 19`() {
+    fun `first three top hour lamps are ON when hour is from 15 to 19`() {
         val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         expectedLamps.apply {
             this[0] = LampColour.RED
@@ -127,7 +128,7 @@ class GetClockDataTest {
     }
 
     @Test
-    fun `all top hour lambs are ON when hour is from 20 to 23`() {
+    fun `all top hour lamps are ON when hour is from 20 to 23`() {
         val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.RED }
         (20..23).forEach {
             assertThat(getClockData.getTopHourLamps(hour = it) == expectedLamps).isTrue()
@@ -151,7 +152,7 @@ class GetClockDataTest {
     }
 
     @Test
-    fun `all bottom  hour lambs are OFF when reminder for the hours divided by 5 is 0`() {
+    fun `all bottom  hour lamps are OFF when reminder for the hours divided by 5 is 0`() {
         val expectedResult = List(HOUR_LAMP_COUNT) { LampColour.OFF }
         (0..23 step 5).forEach {
             assertThat(getClockData.getBottomHourLamps(hour = it) == expectedResult).isTrue()
@@ -159,7 +160,7 @@ class GetClockDataTest {
     }
 
     @Test
-    fun `first bottom hour lamb is ON when reminder for the hours divided by 5 is 1`() {
+    fun `first bottom hour lamp is ON when reminder for the hours divided by 5 is 1`() {
         val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         expectedLamps[0] = LampColour.RED
         (1..23 step 5).forEach {
@@ -168,7 +169,7 @@ class GetClockDataTest {
     }
 
     @Test
-    fun `first two bottom hour lambs are ON when reminder for the hours divided by 5 is 2`() {
+    fun `first two bottom hour lamps are ON when reminder for the hours divided by 5 is 2`() {
         val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         expectedLamps.apply {
             this[0] = LampColour.RED
@@ -180,7 +181,7 @@ class GetClockDataTest {
     }
 
     @Test
-    fun `first three bottom hour lambs are ON when reminder for the hours divided by 5 is 3`() {
+    fun `first three bottom hour lamps are ON when reminder for the hours divided by 5 is 3`() {
         val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         expectedLamps.apply {
             this[0] = LampColour.RED
@@ -193,13 +194,13 @@ class GetClockDataTest {
     }
 
     @Test
-    fun `all the four bottom hour lambs are ON when hour is 4`() {
+    fun `all the four bottom hour lamps are ON when hour is 4`() {
         val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.RED }
         assertThat(getClockData.getBottomHourLamps(hour = 4) == expectedLamps).isTrue()
     }
 
     @Test
-    fun `all the four bottom hour lambs are ON when reminder for the hours divided by 5 is 4`() {
+    fun `all the four bottom hour lamps are ON when reminder for the hours divided by 5 is 4`() {
         val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.RED }
         (4..23 step 5).forEach {
             assertThat(getClockData.getBottomHourLamps(hour = it) == expectedLamps).isTrue()
@@ -223,7 +224,7 @@ class GetClockDataTest {
     }
 
     @Test
-    fun `all top minute lambs are OFF when minutes is in the range from 0 to 4`() {
+    fun `all top minute lamps are OFF when minutes is in the range from 0 to 4`() {
         val expectedResult = List(TOP_MIN_LAMP_COUNT) { LampColour.OFF }
         (0..4).forEach {
             assertThat(getClockData.getTopMinuteLamps(minutes = it) == expectedResult).isTrue()
@@ -231,7 +232,7 @@ class GetClockDataTest {
     }
 
     @Test
-    fun `first top minute lamb is ON when minutes is in the range from 5 to 9`() {
+    fun `first top minute lamp is ON when minutes is in the range from 5 to 9`() {
         val expectedLamps = MutableList(TOP_MIN_LAMP_COUNT) { LampColour.OFF }
         expectedLamps[0] = LampColour.YELLOW
         (5..9).forEach {
@@ -240,7 +241,7 @@ class GetClockDataTest {
     }
 
     @Test
-    fun `first two top minute lambs are ON when minutes is in the range from 10 to 14`() {
+    fun `first two top minute lamps are ON when minutes is in the range from 10 to 14`() {
         val expectedLamps = MutableList(TOP_MIN_LAMP_COUNT) { LampColour.OFF }
         expectedLamps.apply {
             this[0] = LampColour.YELLOW
@@ -252,7 +253,7 @@ class GetClockDataTest {
     }
 
     @Test
-    fun `first three top minute lambs are ON and third lamp is RED when minutes is in the range from 15 to 19`() {
+    fun `first three top minute lamps are ON and third lamp is RED when minutes is in the range from 15 to 19`() {
         val expectedLamps = MutableList(TOP_MIN_LAMP_COUNT) { LampColour.OFF }
         expectedLamps.apply {
             this[0] = LampColour.YELLOW
@@ -265,7 +266,7 @@ class GetClockDataTest {
     }
 
     @Test
-    fun `first four top minute lambs are ON and third lamp is RED when minutes is in the range from 20 to 24`() {
+    fun `first four top minute lamps are ON and third lamp is RED when minutes is in the range from 20 to 24`() {
         val expectedLamps = MutableList(TOP_MIN_LAMP_COUNT) { LampColour.OFF }
         expectedLamps.apply {
             this[0] = LampColour.YELLOW
@@ -279,7 +280,7 @@ class GetClockDataTest {
     }
 
     @Test
-    fun `first five top minute lambs are ON and third lamp is RED when minutes is in the range from 25 to 29`() {
+    fun `first five top minute lamps are ON and third lamp is RED when minutes is in the range from 25 to 29`() {
         val expectedLamps = MutableList(TOP_MIN_LAMP_COUNT) { LampColour.OFF }
         expectedLamps.apply {
             this[0] = LampColour.YELLOW
@@ -294,7 +295,7 @@ class GetClockDataTest {
     }
 
     @Test
-    fun `first six top minute lambs are ON and third and sixth lamps are RED when minutes is in the range from 30 to 34`() {
+    fun `first six top minute lamps are ON and third and sixth lamps are RED when minutes is in the range from 30 to 34`() {
         val expectedLamps = MutableList(TOP_MIN_LAMP_COUNT) { LampColour.OFF }
         expectedLamps.apply {
             this[0] = LampColour.YELLOW
@@ -326,16 +327,16 @@ class GetClockDataTest {
     }
 
     @Test
-    fun `all bottom minute lambs are OFF when reminder for the minutes divided by 5 is 0`() {
-        val expectedResult = List(4) { LampColour.OFF }
+    fun `all bottom minute lamps are OFF when reminder for the minutes divided by 5 is 0`() {
+        val expectedResult = List(BOTTOM_MIN_LAMP_COUNT) { LampColour.OFF }
         (0..59 step 5).forEach {
             assertThat(getClockData.getBottomMinuteLamps(minutes = it) == expectedResult).isTrue()
         }
     }
 
     @Test
-    fun `first bottom minute lamb is ON when reminder for the minutes divided by 5 is 1`() {
-        val expectedLamps = MutableList(4) { LampColour.OFF }
+    fun `first bottom minute lamp is ON when reminder for the minutes divided by 5 is 1`() {
+        val expectedLamps = MutableList(BOTTOM_MIN_LAMP_COUNT) { LampColour.OFF }
         expectedLamps[0] = LampColour.YELLOW
         (1..59 step 5).forEach {
             assertThat(getClockData.getBottomMinuteLamps(minutes = it) == expectedLamps).isTrue()
@@ -344,7 +345,7 @@ class GetClockDataTest {
 
     @Test
     fun `first two bottom minute lamps are ON when reminder of the minutes divided by 5 is 2`() {
-        val expectedLamps = MutableList(4) { LampColour.OFF }
+        val expectedLamps = MutableList(BOTTOM_MIN_LAMP_COUNT) { LampColour.OFF }
         for (i in 0..1) {
             expectedLamps[i] = LampColour.YELLOW
         }
@@ -355,7 +356,7 @@ class GetClockDataTest {
 
     @Test
     fun `first three bottom minute lamps are ON when reminder of the minutes divided by 5 is 3`() {
-        val expectedLamps = MutableList(4) { LampColour.OFF }
+        val expectedLamps = MutableList(BOTTOM_MIN_LAMP_COUNT) { LampColour.OFF }
         for (i in 0..2) {
             expectedLamps[i] = LampColour.YELLOW
         }
@@ -366,7 +367,7 @@ class GetClockDataTest {
 
     @Test
     fun `all the four bottom minute lamps are ON when reminder of the minutes divided by 5 is 4`() {
-        val expectedLamps = MutableList(4) { LampColour.YELLOW }
+        val expectedLamps = MutableList(BOTTOM_MIN_LAMP_COUNT) { LampColour.YELLOW }
         (4..59 step 5).forEach {
             assertThat(getClockData.getBottomMinuteLamps(minutes = it) == expectedLamps).isTrue()
         }
