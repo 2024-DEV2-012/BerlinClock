@@ -21,12 +21,13 @@ import com.anonymous.berlinclock.core.util.getQuotient
 import com.anonymous.berlinclock.core.util.getReminder
 import com.anonymous.berlinclock.core.util.isEven
 import com.anonymous.berlinclock.core.util.isMultipleOfThree
+import com.anonymous.berlinclock.core.util.splitIntoIntParts
 import com.anonymous.berlinclock.featureberlinclock.domain.model.BerlinClock
 
 class GetClockData {
 
     operator fun invoke(time: String): BerlinClock {
-        val (hour, min, sec) = time.split(":").map { it.toInt() }
+        val (hour, min, sec) = time.splitIntoIntParts(":")
         return BerlinClock(
             secondLamp = getSecondLamp(sec),
             topHourLamps = getTopHourLamps(hour),
