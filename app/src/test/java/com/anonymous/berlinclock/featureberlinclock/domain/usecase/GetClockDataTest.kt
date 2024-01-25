@@ -30,4 +30,11 @@ class GetClockDataTest {
         assertThat(exception).hasMessageThat()
             .contains("The input is greater than the maximum value, which is 59")
     }
+
+    @Test
+    fun `second lamb is OFF for all the odd seconds`() {
+        (1..59 step 2).forEach {
+            assertThat(getClockData.getSeconds(seconds = it) == "O").isTrue()
+        }
+    }
 }

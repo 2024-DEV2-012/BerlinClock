@@ -5,7 +5,7 @@ import com.anonymous.berlinclock.core.util.MESSAGE_INPUT_LESS_THAN_0
 
 class GetClockData {
 
-    fun getSeconds(seconds: Int) {
+    fun getSeconds(seconds: Int): String {
         if (seconds < 0 || seconds > 59) {
             throw RuntimeException(
                 if (seconds < 0) {
@@ -15,5 +15,6 @@ class GetClockData {
                 }
             )
         }
+        return "O"
     }
 }
