@@ -390,4 +390,28 @@ class GetClockDataTest {
         assertThat(berlinClock == expectedRes).isTrue()
     }
 
+    @Test
+    fun `should take a random time in string format and returns corresponding aggregate berlin time`() {
+        val timeString = "21:16:01" // in hh:mm:ss format
+        val topHourLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.RED }
+        val bottomHourLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
+        bottomHourLamps[0] = LampColour.RED
+        val topMinLamps = MutableList(TOP_MIN_LAMP_COUNT) { LampColour.OFF }
+        topMinLamps[0] = LampColour.YELLOW
+        topMinLamps[1] = LampColour.YELLOW
+        topMinLamps[2] = LampColour.RED
+        val bottomMinLamps = MutableList(BOTTOM_MIN_LAMP_COUNT) { LampColour.OFF }
+        bottomMinLamps[0] = LampColour.YELLOW
+        val expectedRes = BerlinClock(
+            secondLamp = LampColour.OFF,
+            topHourLamps = topHourLamps,
+            bottomHourLamps = bottomHourLamps,
+            topMinuteLamps = topMinLamps,
+            bottomMinuteLamps = bottomMinLamps,
+            normalTime = timeString
+        )
+        val berlinClock = getClockData(time = timeString)
+        assertThat(berlinClock == expectedRes).isTrue()
+    }
+
 }

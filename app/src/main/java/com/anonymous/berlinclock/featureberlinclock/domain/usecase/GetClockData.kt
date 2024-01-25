@@ -26,12 +26,13 @@ import com.anonymous.berlinclock.featureberlinclock.domain.model.BerlinClock
 class GetClockData {
 
     operator fun invoke(time: String): BerlinClock {
+        val (hour, min, sec) = time.split(":").map { it.toInt() }
         return BerlinClock(
-            secondLamp = LampColour.YELLOW,
-            topHourLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF },
-            bottomHourLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF },
-            topMinuteLamps = MutableList(TOP_MIN_LAMP_COUNT) { LampColour.OFF },
-            bottomMinuteLamps = MutableList(BOTTOM_MIN_LAMP_COUNT) { LampColour.OFF },
+            secondLamp = getSecondLamp(sec),
+            topHourLamps = getTopHourLamps(hour),
+            bottomHourLamps = getBottomHourLamps(hour),
+            topMinuteLamps = getTopMinuteLamps(min),
+            bottomMinuteLamps = getBottomMinuteLamps(min),
             normalTime = time
         )
     }
