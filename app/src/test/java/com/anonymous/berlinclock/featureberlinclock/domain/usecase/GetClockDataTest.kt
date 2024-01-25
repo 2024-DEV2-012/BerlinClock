@@ -324,4 +324,13 @@ class GetClockDataTest {
         }
         assertThat(exception).hasMessageThat().contains(MESSAGE_INPUT_GREATER_THAN_59)
     }
+
+    @Test
+    fun `all bottom minute lambs are OFF when reminder for the minutes divided by 5 is 0`() {
+        val expectedResult = List(4) { LampColour.OFF }
+        (0..59 step 5).forEach {
+            assertThat(getClockData.getBottomMinuteLamps(minutes = it) == expectedResult).isTrue()
+        }
+    }
+
 }
