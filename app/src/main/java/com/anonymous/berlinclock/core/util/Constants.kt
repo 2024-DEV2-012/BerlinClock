@@ -6,3 +6,5 @@ const val MESSAGE_INPUT_GREATER_THAN_23 = "The input is greater than the maximum
 const val TIME_MIN_VALUE = 0
 const val SEC_MAX_VALUE = 59
 const val HOUR_MAX_VALUE = 23
+const val HOUR_LAMP_COUNT = 4
+const val TOP_HOUR_LAMP_VALUE = 5

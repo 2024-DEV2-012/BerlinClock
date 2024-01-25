@@ -1,5 +1,6 @@
 package com.anonymous.berlinclock.featureberlinclock.domain.usecase
 
+import com.anonymous.berlinclock.core.util.HOUR_LAMP_COUNT
 import com.anonymous.berlinclock.core.util.HOUR_MAX_VALUE
 import com.anonymous.berlinclock.core.util.LampColour
 import com.anonymous.berlinclock.core.util.MESSAGE_INPUT_GREATER_THAN_23
@@ -69,20 +70,20 @@ class GetClockDataTest {
 
     @Test
     fun `all top hour lambs are OFF at midnight - 0 hour`() {
-        val expectedResult = List(4) { LampColour.OFF }
+        val expectedResult = List(HOUR_LAMP_COUNT) { LampColour.OFF }
         assertThat(getClockData.getTopHourLamps(hour = 0) == expectedResult).isTrue()
     }
 
     @Test
     fun `first top hour lamb is ON when hour is 5`() {
-        val expectedLamps = MutableList(4) { LampColour.OFF }
+        val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         expectedLamps[0] = LampColour.RED
         assertThat(getClockData.getTopHourLamps(hour = 5) == expectedLamps).isTrue()
     }
 
     @Test
     fun `first top hour lamb is ON when hour is from 5 to 9`() {
-        val expectedLamps = MutableList(4) { LampColour.OFF }
+        val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         expectedLamps[0] = LampColour.RED
         (5..9).forEach {
             assertThat(getClockData.getTopHourLamps(hour = it) == expectedLamps).isTrue()
@@ -91,7 +92,7 @@ class GetClockDataTest {
 
     @Test
     fun `first two top hour lamb is ON when hour is 10`() {
-        val expectedLamps = MutableList(4) { LampColour.OFF }
+        val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         expectedLamps.apply {
             this[0] = LampColour.RED
             this[1] = LampColour.RED
@@ -101,7 +102,7 @@ class GetClockDataTest {
 
     @Test
     fun `first two top hour lamb is ON when hour is from 10 to 14`() {
-        val expectedLamps = MutableList(4) { LampColour.OFF }
+        val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         expectedLamps.apply {
             this[0] = LampColour.RED
             this[1] = LampColour.RED
@@ -113,7 +114,7 @@ class GetClockDataTest {
 
     @Test
     fun `first three top hour lambs are ON when hour is from 15 to 19`() {
-        val expectedLamps = MutableList(4) { LampColour.OFF }
+        val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         expectedLamps.apply {
             this[0] = LampColour.RED
             this[1] = LampColour.RED
@@ -126,7 +127,7 @@ class GetClockDataTest {
 
     @Test
     fun `all top hour lambs are ON when hour is from 20 to 23`() {
-        val expectedLamps = MutableList(4) { LampColour.RED }
+        val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.RED }
         (20..23).forEach {
             assertThat(getClockData.getTopHourLamps(hour = it) == expectedLamps).isTrue()
         }
