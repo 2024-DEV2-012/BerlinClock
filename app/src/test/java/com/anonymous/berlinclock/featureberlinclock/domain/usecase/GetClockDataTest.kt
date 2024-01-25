@@ -37,4 +37,12 @@ class GetClockDataTest {
             assertThat(getClockData.getSeconds(seconds = it) == "O").isTrue()
         }
     }
+
+
+    @Test
+    fun `second lamb is ON for all the even seconds`() {
+        (0..59 step 2).forEach {
+            assertThat(getClockData.getSeconds(seconds = it) == "Y").isTrue()
+        }
+    }
 }

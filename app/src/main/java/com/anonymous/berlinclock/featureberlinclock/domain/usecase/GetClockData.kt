@@ -15,6 +15,6 @@ class GetClockData {
                 }
             )
         }
-        return "O"
+        return if (seconds % 2 == 0) "Y" else "O"
     }
 }
