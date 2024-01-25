@@ -1,6 +1,8 @@
 package com.anonymous.berlinclock.featureberlinclock.domain.usecase
 
+import com.anonymous.berlinclock.core.util.HOUR_MAX_VALUE
 import com.anonymous.berlinclock.core.util.LampColour
+import com.anonymous.berlinclock.core.util.MESSAGE_INPUT_GREATER_THAN_23
 import com.anonymous.berlinclock.core.util.MESSAGE_INPUT_GREATER_THAN_59
 import com.anonymous.berlinclock.core.util.MESSAGE_INPUT_LESS_THAN_0
 import com.anonymous.berlinclock.core.util.SEC_MAX_VALUE
@@ -23,8 +25,7 @@ class GetClockDataTest {
         val exception = assertThrows(RuntimeException::class.java) {
             getClockData.getSecondLamp(seconds = TIME_MIN_VALUE - 1)
         }
-        assertThat(exception).hasMessageThat()
-            .contains(MESSAGE_INPUT_LESS_THAN_0)
+        assertThat(exception).hasMessageThat().contains(MESSAGE_INPUT_LESS_THAN_0)
     }
 
     @Test
@@ -32,8 +33,7 @@ class GetClockDataTest {
         val exception = assertThrows(RuntimeException::class.java) {
             getClockData.getSecondLamp(seconds = SEC_MAX_VALUE + 1)
         }
-        assertThat(exception).hasMessageThat()
-            .contains(MESSAGE_INPUT_GREATER_THAN_59)
+        assertThat(exception).hasMessageThat().contains(MESSAGE_INPUT_GREATER_THAN_59)
     }
 
     @Test
@@ -56,16 +56,14 @@ class GetClockDataTest {
         val exception = assertThrows(RuntimeException::class.java) {
             getClockData.getTopHourLamps(hour = TIME_MIN_VALUE - 1)
         }
-        assertThat(exception).hasMessageThat()
-            .contains(MESSAGE_INPUT_LESS_THAN_0)
+        assertThat(exception).hasMessageThat().contains(MESSAGE_INPUT_LESS_THAN_0)
     }
 
     @Test
     fun `top hour lamps converter throws exception when the input is greater than max value 23`() {
         val exception = assertThrows(RuntimeException::class.java) {
-            getClockData.getTopHourLamps(hour = 24)
+            getClockData.getTopHourLamps(hour = HOUR_MAX_VALUE + 1)
         }
-        assertThat(exception).hasMessageThat()
-            .contains("The input is greater than the maximum value, which is 23")
+        assertThat(exception).hasMessageThat().contains(MESSAGE_INPUT_GREATER_THAN_23)
     }
 }

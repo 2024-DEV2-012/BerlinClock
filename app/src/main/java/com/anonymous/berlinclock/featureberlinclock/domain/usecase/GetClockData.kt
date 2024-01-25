@@ -1,6 +1,8 @@
 package com.anonymous.berlinclock.featureberlinclock.domain.usecase
 
+import com.anonymous.berlinclock.core.util.HOUR_MAX_VALUE
 import com.anonymous.berlinclock.core.util.LampColour
+import com.anonymous.berlinclock.core.util.MESSAGE_INPUT_GREATER_THAN_23
 import com.anonymous.berlinclock.core.util.MESSAGE_INPUT_GREATER_THAN_59
 import com.anonymous.berlinclock.core.util.MESSAGE_INPUT_LESS_THAN_0
 import com.anonymous.berlinclock.core.util.SEC_MAX_VALUE
@@ -24,15 +26,9 @@ class GetClockData {
     }
 
     fun getTopHourLamps(hour: Int) {
-        if (hour < TIME_MIN_VALUE) {
+        if (hour < TIME_MIN_VALUE || hour > HOUR_MAX_VALUE) {
             throw RuntimeException(
-                MESSAGE_INPUT_LESS_THAN_0
-            )
-        }
-
-        if (hour > 23) {
-            throw RuntimeException(
-                "The input is greater than the maximum value, which is 23"
+                if (hour < TIME_MIN_VALUE) MESSAGE_INPUT_LESS_THAN_0 else MESSAGE_INPUT_GREATER_THAN_23
             )
         }
     }
