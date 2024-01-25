@@ -188,6 +188,4 @@ class GetClockDataTest {
         val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.RED }
         assertThat(getClockData.getBottomHourLamps(hour = 4) == expectedLamps).isTrue()
     }
-
-
 }
