@@ -171,4 +171,17 @@ class GetClockDataTest {
         }
         assertThat(getClockData.getBottomHourLamps(hour = 2) == expectedLamps).isTrue()
     }
+
+    @Test
+    fun `first three bottom hour lambs are ON when hour is 3`() {
+        val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
+        expectedLamps.apply {
+            this[0] = LampColour.RED
+            this[1] = LampColour.RED
+            this[2] = LampColour.RED
+        }
+        assertThat(getClockData.getBottomHourLamps(hour = 3) == expectedLamps).isTrue()
+    }
+
+
 }
