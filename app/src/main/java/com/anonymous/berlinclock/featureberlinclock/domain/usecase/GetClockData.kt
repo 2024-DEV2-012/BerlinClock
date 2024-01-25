@@ -48,7 +48,11 @@ class GetClockData {
                 if (hour < TIME_MIN_VALUE) MESSAGE_INPUT_LESS_THAN_0 else MESSAGE_INPUT_GREATER_THAN_23
             )
         }
-        return MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
+        val lamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
+        if (hour == 1) {
+            lamps[0] = LampColour.RED
+        }
+        return lamps
     }
 
 }
