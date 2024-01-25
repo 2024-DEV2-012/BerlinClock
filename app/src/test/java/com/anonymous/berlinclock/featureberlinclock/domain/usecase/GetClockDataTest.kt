@@ -8,6 +8,7 @@ import com.anonymous.berlinclock.core.util.MESSAGE_INPUT_GREATER_THAN_59
 import com.anonymous.berlinclock.core.util.MESSAGE_INPUT_LESS_THAN_0
 import com.anonymous.berlinclock.core.util.TIME_MAX_VALUE
 import com.anonymous.berlinclock.core.util.TIME_MIN_VALUE
+import com.anonymous.berlinclock.core.util.TOP_MIN_LAMP_COUNT
 import com.google.common.truth.Truth.assertThat
 import org.junit.Assert.assertThrows
 import org.junit.Before
@@ -223,7 +224,7 @@ class GetClockDataTest {
 
     @Test
     fun `all top minute lambs are OFF when minutes is in the range from 0 to 4`() {
-        val expectedResult = List(11) { LampColour.OFF }
+        val expectedResult = List(TOP_MIN_LAMP_COUNT) { LampColour.OFF }
         (0..4).forEach {
             assertThat(getClockData.getTopMinuteLamps(minutes = it) == expectedResult).isTrue()
         }
