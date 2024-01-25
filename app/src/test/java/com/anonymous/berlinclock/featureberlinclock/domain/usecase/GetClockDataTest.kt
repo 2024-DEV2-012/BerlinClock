@@ -148,4 +148,10 @@ class GetClockDataTest {
         }
         assertThat(exception).hasMessageThat().contains(MESSAGE_INPUT_GREATER_THAN_23)
     }
+
+    @Test
+    fun `all bottom  hour lambs are OFF at midnight - 0 hour`() {
+        val expectedResult = List(HOUR_LAMP_COUNT) { LampColour.OFF }
+        assertThat(getClockData.getBottomHourLamps(hour = 0) == expectedResult).isTrue()
+    }
 }
