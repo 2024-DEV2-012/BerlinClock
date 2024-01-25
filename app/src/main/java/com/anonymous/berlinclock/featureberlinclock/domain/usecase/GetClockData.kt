@@ -42,4 +42,10 @@ class GetClockData {
         return lamps
     }
 
+    fun getBottomHourLamps(hour: Int) {
+        if (hour < TIME_MIN_VALUE) {
+            throw RuntimeException(MESSAGE_INPUT_LESS_THAN_0)
+        }
+    }
+
 }
