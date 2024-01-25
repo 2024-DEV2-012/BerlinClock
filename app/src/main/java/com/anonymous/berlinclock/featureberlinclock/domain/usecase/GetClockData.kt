@@ -12,6 +12,8 @@ import com.anonymous.berlinclock.core.util.TIME_MAX_VALUE
 import com.anonymous.berlinclock.core.util.SecondLamp
 import com.anonymous.berlinclock.core.util.TIME_MIN_VALUE
 import com.anonymous.berlinclock.core.util.TOP_HOUR_LAMP_VALUE
+import com.anonymous.berlinclock.core.util.getQuotient
+import com.anonymous.berlinclock.core.util.getReminder
 import com.anonymous.berlinclock.core.util.isEven
 
 class GetClockData {
@@ -28,7 +30,7 @@ class GetClockData {
             upperBoundMsg = MESSAGE_INPUT_GREATER_THAN_23
         )
         val lamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
-        val litLambCount = hour / TOP_HOUR_LAMP_VALUE
+        val litLambCount = hour.getQuotient(TOP_HOUR_LAMP_VALUE)
         for (i in 0 until litLambCount) {
             lamps[i] = LampColour.RED
         }
@@ -42,7 +44,7 @@ class GetClockData {
             upperBoundMsg = MESSAGE_INPUT_GREATER_THAN_23
         )
         val lamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
-        val litLambCount = hour % TOP_HOUR_LAMP_VALUE
+        val litLambCount = hour.getReminder(TOP_HOUR_LAMP_VALUE)
         for (i in 0 until litLambCount) {
             lamps[i] = LampColour.RED
         }
