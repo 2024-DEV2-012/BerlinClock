@@ -72,6 +72,10 @@ class GetClockData {
         } else if (minutes in (2..59 step 5)) {
             lamps[0] = LampColour.YELLOW
             lamps[1] = LampColour.YELLOW
+        } else if (minutes in (3..59 step 5)) {
+            lamps[0] = LampColour.YELLOW
+            lamps[1] = LampColour.YELLOW
+            lamps[2] = LampColour.YELLOW
         }
         return lamps
     }

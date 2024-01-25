@@ -353,4 +353,15 @@ class GetClockDataTest {
         }
     }
 
+    @Test
+    fun `first three bottom minute lamps are ON when reminder of the minutes divided by 5 is 3`() {
+        val expectedLamps = MutableList(4) { LampColour.OFF }
+        for (i in 0..2) {
+            expectedLamps[i] = LampColour.YELLOW
+        }
+        (3..59 step 5).forEach {
+            assertThat(getClockData.getBottomMinuteLamps(minutes = it) == expectedLamps).isTrue()
+        }
+    }
+
 }
