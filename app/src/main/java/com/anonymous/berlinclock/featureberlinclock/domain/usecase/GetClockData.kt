@@ -75,6 +75,13 @@ class GetClockData {
                 lamps[2] = LampColour.RED
                 lamps[3] = LampColour.YELLOW
             }
+            in (25..29) -> {
+                lamps[0] = LampColour.YELLOW
+                lamps[1] = LampColour.YELLOW
+                lamps[2] = LampColour.RED
+                lamps[3] = LampColour.YELLOW
+                lamps[4] = LampColour.YELLOW
+            }
         }
         return lamps
     }
