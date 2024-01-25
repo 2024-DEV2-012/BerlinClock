@@ -188,4 +188,12 @@ class GetClockDataTest {
         val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.RED }
         assertThat(getClockData.getBottomHourLamps(hour = 4) == expectedLamps).isTrue()
     }
+
+    @Test
+    fun `all the four bottom hour lambs are ON when reminder for the hours divided by 5 is 4`() {
+        val expectedLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.RED }
+        (4..23 step 5).forEach {
+            assertThat(getClockData.getBottomHourLamps(hour = it) == expectedLamps).isTrue()
+        }
+    }
 }

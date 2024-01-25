@@ -50,7 +50,8 @@ class GetClockData {
             )
         }
         val lamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
-        for (i in 0 until hour) {
+        val litLambCount = hour % TOP_HOUR_LAMP_VALUE
+        for (i in 0 until litLambCount) {
             lamps[i] = LampColour.RED
         }
         return lamps
