@@ -57,10 +57,10 @@ class GetClockData {
         return lamps
     }
 
-    fun getTopMinuteLamps(seconds: Int) {
-        if (seconds < TIME_MIN_VALUE || seconds > SEC_MAX_VALUE) {
+    fun getTopMinuteLamps(minutes: Int) {
+        if (minutes < TIME_MIN_VALUE || minutes > SEC_MAX_VALUE) {
             throw RuntimeException(
-                if (seconds < TIME_MIN_VALUE) {
+                if (minutes < TIME_MIN_VALUE) {
                     MESSAGE_INPUT_LESS_THAN_0
                 } else {
                     MESSAGE_INPUT_GREATER_THAN_59

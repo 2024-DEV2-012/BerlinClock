@@ -208,7 +208,7 @@ class GetClockDataTest {
     @Test
     fun `top minute lamp converter throws exception when the input is less than min value 0`() {
         val exception = assertThrows(RuntimeException::class.java) {
-            getClockData.getTopMinuteLamps(seconds = TIME_MIN_VALUE - 1)
+            getClockData.getTopMinuteLamps(minutes = TIME_MIN_VALUE - 1)
         }
         assertThat(exception).hasMessageThat().contains(MESSAGE_INPUT_LESS_THAN_0)
     }
@@ -216,7 +216,7 @@ class GetClockDataTest {
     @Test
     fun `top minute lamp converter throws exception when the input is greater than max value 59`() {
         val exception = assertThrows(RuntimeException::class.java) {
-            getClockData.getTopMinuteLamps(seconds = SEC_MAX_VALUE + 1)
+            getClockData.getTopMinuteLamps(minutes = SEC_MAX_VALUE + 1)
         }
         assertThat(exception).hasMessageThat().contains(MESSAGE_INPUT_GREATER_THAN_59)
     }
