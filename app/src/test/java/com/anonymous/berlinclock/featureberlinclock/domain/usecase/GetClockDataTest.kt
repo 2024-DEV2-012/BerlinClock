@@ -6,7 +6,7 @@ import com.anonymous.berlinclock.core.util.LampColour
 import com.anonymous.berlinclock.core.util.MESSAGE_INPUT_GREATER_THAN_23
 import com.anonymous.berlinclock.core.util.MESSAGE_INPUT_GREATER_THAN_59
 import com.anonymous.berlinclock.core.util.MESSAGE_INPUT_LESS_THAN_0
-import com.anonymous.berlinclock.core.util.SEC_MAX_VALUE
+import com.anonymous.berlinclock.core.util.TIME_MAX_VALUE
 import com.anonymous.berlinclock.core.util.TIME_MIN_VALUE
 import com.google.common.truth.Truth.assertThat
 import org.junit.Assert.assertThrows
@@ -32,14 +32,14 @@ class GetClockDataTest {
     @Test
     fun `seconds converter throws exception when the input is greater than max value`() {
         val exception = assertThrows(RuntimeException::class.java) {
-            getClockData.getSecondLamp(seconds = SEC_MAX_VALUE + 1)
+            getClockData.getSecondLamp(seconds = TIME_MAX_VALUE + 1)
         }
         assertThat(exception).hasMessageThat().contains(MESSAGE_INPUT_GREATER_THAN_59)
     }
 
     @Test
     fun `second lamb is OFF for all the odd seconds`() {
-        (TIME_MIN_VALUE + 1..SEC_MAX_VALUE step 2).forEach {
+        (TIME_MIN_VALUE + 1..TIME_MAX_VALUE step 2).forEach {
             assertThat(getClockData.getSecondLamp(seconds = it) == LampColour.OFF).isTrue()
         }
     }
@@ -47,7 +47,7 @@ class GetClockDataTest {
 
     @Test
     fun `second lamb is ON for all the even seconds`() {
-        (TIME_MIN_VALUE..SEC_MAX_VALUE step 2).forEach {
+        (TIME_MIN_VALUE..TIME_MAX_VALUE step 2).forEach {
             assertThat(getClockData.getSecondLamp(seconds = it) == LampColour.YELLOW).isTrue()
         }
     }
@@ -216,7 +216,7 @@ class GetClockDataTest {
     @Test
     fun `top minute lamp converter throws exception when the input is greater than max value 59`() {
         val exception = assertThrows(RuntimeException::class.java) {
-            getClockData.getTopMinuteLamps(minutes = SEC_MAX_VALUE + 1)
+            getClockData.getTopMinuteLamps(minutes = TIME_MAX_VALUE + 1)
         }
         assertThat(exception).hasMessageThat().contains(MESSAGE_INPUT_GREATER_THAN_59)
     }

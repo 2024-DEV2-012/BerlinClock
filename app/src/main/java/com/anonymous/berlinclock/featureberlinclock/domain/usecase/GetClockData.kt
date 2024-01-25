@@ -8,7 +8,7 @@ import com.anonymous.berlinclock.core.util.LampColour
 import com.anonymous.berlinclock.core.util.MESSAGE_INPUT_GREATER_THAN_23
 import com.anonymous.berlinclock.core.util.MESSAGE_INPUT_GREATER_THAN_59
 import com.anonymous.berlinclock.core.util.MESSAGE_INPUT_LESS_THAN_0
-import com.anonymous.berlinclock.core.util.SEC_MAX_VALUE
+import com.anonymous.berlinclock.core.util.TIME_MAX_VALUE
 import com.anonymous.berlinclock.core.util.SecondLamp
 import com.anonymous.berlinclock.core.util.TIME_MIN_VALUE
 import com.anonymous.berlinclock.core.util.TOP_HOUR_LAMP_VALUE
@@ -17,24 +17,16 @@ import com.anonymous.berlinclock.core.util.isEven
 class GetClockData {
 
     fun getSecondLamp(seconds: Int): SecondLamp {
-        if (seconds < TIME_MIN_VALUE || seconds > SEC_MAX_VALUE) {
-            throw RuntimeException(
-                if (seconds < TIME_MIN_VALUE) {
-                    MESSAGE_INPUT_LESS_THAN_0
-                } else {
-                    MESSAGE_INPUT_GREATER_THAN_59
-                }
-            )
-        }
+        checkValidInputBounds(seconds)
         return if (seconds.isEven()) LampColour.YELLOW else LampColour.OFF
     }
 
     fun getTopHourLamps(hour: Int): TopHourLamps {
-        if (hour < TIME_MIN_VALUE || hour > HOUR_MAX_VALUE) {
-            throw RuntimeException(
-                if (hour < TIME_MIN_VALUE) MESSAGE_INPUT_LESS_THAN_0 else MESSAGE_INPUT_GREATER_THAN_23
-            )
-        }
+        checkValidInputBounds(
+            hour,
+            maxValue = HOUR_MAX_VALUE,
+            upperBoundMsg = MESSAGE_INPUT_GREATER_THAN_23
+        )
         val lamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         val litLambCount = hour / TOP_HOUR_LAMP_VALUE
         for (i in 0 until litLambCount) {
@@ -44,11 +36,11 @@ class GetClockData {
     }
 
     fun getBottomHourLamps(hour: Int): BottomHourLamps {
-        if (hour < TIME_MIN_VALUE || hour > HOUR_MAX_VALUE) {
-            throw RuntimeException(
-                if (hour < TIME_MIN_VALUE) MESSAGE_INPUT_LESS_THAN_0 else MESSAGE_INPUT_GREATER_THAN_23
-            )
-        }
+        checkValidInputBounds(
+            hour,
+            maxValue = HOUR_MAX_VALUE,
+            upperBoundMsg = MESSAGE_INPUT_GREATER_THAN_23
+        )
         val lamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         val litLambCount = hour % TOP_HOUR_LAMP_VALUE
         for (i in 0 until litLambCount) {
@@ -58,13 +50,17 @@ class GetClockData {
     }
 
     fun getTopMinuteLamps(minutes: Int) {
-        if (minutes < TIME_MIN_VALUE || minutes > SEC_MAX_VALUE) {
+        checkValidInputBounds(minutes)
+    }
+
+    private fun checkValidInputBounds(
+        inputTime: Int,
+        maxValue: Int = TIME_MAX_VALUE,
+        upperBoundMsg: String = MESSAGE_INPUT_GREATER_THAN_59
+    ) {
+        if (inputTime < TIME_MIN_VALUE || inputTime > maxValue) {
             throw RuntimeException(
-                if (minutes < TIME_MIN_VALUE) {
-                    MESSAGE_INPUT_LESS_THAN_0
-                } else {
-                    MESSAGE_INPUT_GREATER_THAN_59
-                }
+                if (inputTime < TIME_MIN_VALUE) MESSAGE_INPUT_LESS_THAN_0 else upperBoundMsg
             )
         }
     }
