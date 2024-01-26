@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -14,7 +16,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.anonymous.berlinclock.HiltTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -62,6 +64,12 @@ dependencies {
     implementation("joda-time:joda-time:2.12.6")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
+    //Dagger - Hilt
+    val hiltVersion = "2.48"
+    implementation("com.google.dagger:hilt-android:$hiltVersion")
+    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
+
 //    Local Unit test
     testImplementation("junit:junit:4.13.2")
     testImplementation("androidx.arch.core:core-testing:2.2.0")
@@ -75,6 +83,8 @@ dependencies {
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation("com.google.truth:truth:1.1.4")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.44")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.48")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
