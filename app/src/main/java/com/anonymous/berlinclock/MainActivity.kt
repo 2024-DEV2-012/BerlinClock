@@ -9,7 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.anonymous.berlinclock.featureberlinclock.presentation.berlinclock.navutils.BerlinClockNavGraph
+import com.anonymous.berlinclock.featureberlinclock.presentation.navutils.BerlinClockNavGraph
 import com.anonymous.berlinclock.ui.theme.BerlinClockTheme
 
 class MainActivity : ComponentActivity() {

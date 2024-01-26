@@ -1,4 +1,4 @@
-package com.anonymous.berlinclock.featureberlinclock.presentation.berlinclock.navutils
+package com.anonymous.berlinclock.featureberlinclock.presentation.navutils
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost

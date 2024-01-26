@@ -6,7 +6,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import com.anonymous.berlinclock.MainActivity
 import com.anonymous.berlinclock.core.util.TestTags
-import com.anonymous.berlinclock.featureberlinclock.presentation.berlinclock.navutils.BerlinClockNavGraph
+import com.anonymous.berlinclock.featureberlinclock.presentation.navutils.BerlinClockNavGraph
 import com.anonymous.berlinclock.ui.theme.BerlinClockTheme
 import org.junit.Before
 import org.junit.Rule
