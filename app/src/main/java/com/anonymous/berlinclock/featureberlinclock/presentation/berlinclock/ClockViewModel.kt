@@ -19,6 +19,7 @@ class ClockViewModel(
     fun onEvent(event: ClockEvent) {
         when (event) {
             is ClockEvent.StartAutomaticClock -> startAutomaticClock()
+            is ClockEvent.UpdateClock -> updateBerlinTime(time = event.time)
         }
     }
 
@@ -39,4 +40,19 @@ class ClockViewModel(
                 }.launchIn(this)
         }
     }
+
+    private fun updateBerlinTime(time: String) {
+        val result = useCase(time = time)
+        result.let {
+            _clockState.value = _clockState.value.copy(
+                secondLamp = it.secondLamp,
+                topHourLamps = it.topHourLamps,
+                bottomHourLamps = it.bottomHourLamps,
+                topMinuteLamps = it.topMinuteLamps,
+                bottomMinuteLamps = it.bottomMinuteLamps,
+                normalTime = it.normalTime
+            )
+        }
+    }
+
 }

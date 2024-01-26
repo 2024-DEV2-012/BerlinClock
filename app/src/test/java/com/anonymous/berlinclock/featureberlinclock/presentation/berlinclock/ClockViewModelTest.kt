@@ -54,4 +54,35 @@ class ClockViewModelTest {
         }
 
     }
+
+    @Test
+    fun `check berlin clock lamps are updating for the manual clock scenario`() {
+        viewModel = ClockViewModel(useCase)
+        val secondLamp = LampColour.YELLOW
+        val topHourLamps = List(HOUR_LAMP_COUNT) { LampColour.RED }
+        val bottomHourLamps = List(HOUR_LAMP_COUNT) { LampColour.RED }
+        val topMinuteLamps = MutableList(TOP_MIN_LAMP_COUNT) { LampColour.YELLOW }
+        val bottomMinuteLamps = List(BOTTOM_MIN_LAMP_COUNT) { LampColour.YELLOW }
+        val normalTime = "11:12:08"
+        val expectedClock = BerlinClock(
+            secondLamp = secondLamp,
+            topHourLamps = topHourLamps,
+            bottomHourLamps = bottomHourLamps,
+            topMinuteLamps = topMinuteLamps,
+            bottomMinuteLamps = bottomMinuteLamps,
+            normalTime = normalTime
+        )
+        every { useCase(any()) } returns expectedClock
+        viewModel.onEvent(ClockEvent.UpdateClock("11:12:08"))
+        val clockState = viewModel.clockState.value
+        clockState.let {
+            assertThat(
+                it.secondLamp == secondLamp &&
+                        it.topHourLamps == topHourLamps &&
+                        it.bottomHourLamps == bottomHourLamps &&
+                        it.topMinuteLamps == topMinuteLamps &&
+                        it.bottomMinuteLamps == bottomMinuteLamps
+            ).isTrue()
+        }
+    }
 }
