@@ -3,6 +3,7 @@ package com.anonymous.berlinclock.featureberlinclock.presentation.berlinclock
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import com.anonymous.berlinclock.MainActivity
 import com.anonymous.berlinclock.core.util.TestTags
@@ -33,5 +34,10 @@ class ClockScreenTest {
     @Test
     fun validateTopBarIsVisible() {
         composeRule.onNodeWithTag(TestTags.TOP_BAR).assertIsDisplayed()
+    }
+
+    @Test
+    fun validateToggleSwitchIsVisible() {
+        composeRule.onNodeWithContentDescription(TestTags.TOGGLE).assertIsDisplayed()
     }
 }
