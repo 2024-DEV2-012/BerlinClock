@@ -1,17 +1,12 @@
 package com.anonymous.berlinclock.featureberlinclock.presentation.berlinclock
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -23,8 +18,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -32,17 +25,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.anonymous.berlinclock.R
-import com.anonymous.berlinclock.core.util.BottomHourLamps
-import com.anonymous.berlinclock.core.util.BottomMinuteLamps
-import com.anonymous.berlinclock.core.util.TestTags.BOTTOM_HOUR_LAMP
-import com.anonymous.berlinclock.core.util.TestTags.BOTTOM_MIN_LAMP
-import com.anonymous.berlinclock.core.util.TestTags.NORMAL_TIME
-import com.anonymous.berlinclock.core.util.TestTags.SECOND_LAMP
+import com.anonymous.berlinclock.core.util.TestTags
 import com.anonymous.berlinclock.core.util.TestTags.TOP_BAR
-import com.anonymous.berlinclock.core.util.TestTags.TOP_HOUR_LAMP
-import com.anonymous.berlinclock.core.util.TestTags.TOP_MIN_LAMP
-import com.anonymous.berlinclock.core.util.TopHourLamps
-import com.anonymous.berlinclock.core.util.TopMinuteLamps
+import com.anonymous.berlinclock.featureberlinclock.presentation.berlinclock.components.BerlinClock
 import com.anonymous.berlinclock.featureberlinclock.presentation.berlinclock.components.ToggleButton
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -89,9 +74,7 @@ fun ClockScreen(
                 ) {
                     ToggleButton()
                     NormalTime()
-                    SecondsLamp()
-                    DisplayHourLamps(clockState)
-                    DisplayMinuteLamps(clockState)
+                    BerlinClock(clockState = clockState)
                 }
             }
         }
@@ -103,137 +86,13 @@ fun NormalTime() {
     Text(
         modifier = Modifier
             .padding(15.dp)
-            .testTag(NORMAL_TIME),
+            .testTag(TestTags.NORMAL_TIME),
         style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Bold),
         text = "Time",
         textAlign = TextAlign.Center
     )
 }
 
-@Composable
-fun SecondsLamp() {
-    Box(
-        modifier = Modifier
-            .padding(vertical = 8.dp)
-            .size(80.dp)
-            .clip(CircleShape)
-            .border(2.dp, Color.DarkGray, CircleShape)
-            .testTag(SECOND_LAMP)
-            .background(Color.White)
-    )
-}
-
-@Composable
-fun DisplayHourLamps(clockState: ClockState) {
-    val modifier = Modifier.fillMaxWidth()
-    TopHourLamps(modifier, clockState.topHourLamps)
-    BottomHourLamps(modifier, clockState.bottomHourLamps)
-}
-
-@Composable
-fun TopHourLamps(modifier: Modifier, lamps: TopHourLamps) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
-    ) {
-        repeat(lamps.size) {
-            Row(
-                modifier = Modifier.weight(1f),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Lamp(
-                    tag = "$TOP_HOUR_LAMP$it"
-                )
-            }
-
-        }
-    }
-}
-
-@Composable
-fun BottomHourLamps(modifier: Modifier, lamps: BottomHourLamps) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
-    ) {
-        repeat(lamps.size) {
-            Row(
-                modifier = Modifier.weight(1f),
-                horizontalArrangement = Arrangement.Center
-            ) {
-
-                Lamp(
-                    tag = "$BOTTOM_HOUR_LAMP$it"
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun DisplayMinuteLamps(clockState: ClockState) {
-    TopMinuteLamps(clockState.topMinuteLamps)
-    BottomMinuteLamps(clockState.bottomMinuteLamps)
-}
-
-@Composable
-fun TopMinuteLamps(lamps: TopMinuteLamps) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        repeat(lamps.size) {
-            Row(
-                modifier = Modifier.weight(1f),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Lamp(
-                    tag = "$TOP_MIN_LAMP$it"
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun BottomMinuteLamps(lamps: BottomMinuteLamps) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        repeat(lamps.size) {
-            Row(
-                modifier = Modifier.weight(1f),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Lamp(
-                    tag = "$BOTTOM_MIN_LAMP$it"
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun Lamp(
-    tag: String,
-    size: Int = 60
-) {
-    Column(modifier = Modifier.padding(2.dp)) {
-        Box(
-            modifier = Modifier
-                .testTag(tag)
-                .padding(horizontal = 0.dp, vertical = 5.dp)
-                .fillMaxWidth()
-                .size(size.dp)
-                .border(2.dp, Color.DarkGray, RoundedCornerShape(8.dp))
-                .clip(RoundedCornerShape(8.dp))
-                .background(Color.White)
-        )
-    }
-}
 
 @Preview(showBackground = true)
 @Composable
