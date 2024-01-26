@@ -1,6 +1,7 @@
 package com.anonymous.berlinclock.featureberlinclock.presentation.berlinclock
 
 import com.anonymous.berlinclock.core.util.BOTTOM_MIN_LAMP_COUNT
+import com.anonymous.berlinclock.core.util.EMPTY_STRING
 import com.anonymous.berlinclock.core.util.HOUR_LAMP_COUNT
 import com.anonymous.berlinclock.core.util.LampColour
 import com.anonymous.berlinclock.core.util.TOP_MIN_LAMP_COUNT
@@ -44,6 +45,6 @@ class ClockStateTest {
 
     @Test
     fun `check normal time is initially empty`() {
-        assertThat(clockState.normalTime == "").isTrue()
+        assertThat(clockState.normalTime == EMPTY_STRING).isTrue()
     }
 }

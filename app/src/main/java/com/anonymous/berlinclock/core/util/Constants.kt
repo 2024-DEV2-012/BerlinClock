@@ -12,3 +12,4 @@ const val TOP_MIN_LAMP_COUNT = 11
 const val TOP_MIN_LAMP_VALUE = 5
 const val BOTTOM_MIN_LAMP_COUNT = 4
 const val TIME_FORMAT = "HH:mm:ss"
+const val EMPTY_STRING = ""
