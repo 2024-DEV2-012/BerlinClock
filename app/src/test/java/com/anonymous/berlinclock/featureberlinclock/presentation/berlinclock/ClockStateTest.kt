@@ -1,5 +1,6 @@
 package com.anonymous.berlinclock.featureberlinclock.presentation.berlinclock
 
+import com.anonymous.berlinclock.core.util.BOTTOM_MIN_LAMP_COUNT
 import com.anonymous.berlinclock.core.util.HOUR_LAMP_COUNT
 import com.anonymous.berlinclock.core.util.LampColour
 import com.anonymous.berlinclock.core.util.TOP_MIN_LAMP_COUNT
@@ -34,5 +35,10 @@ class ClockStateTest {
     @Test
     fun `check top minute lamps are initially OFF`() {
         assertThat(clockState.topMinuteLamps == List(TOP_MIN_LAMP_COUNT) { LampColour.OFF }).isTrue()
+    }
+
+    @Test
+    fun `check bottom minute lamps are initially OFF`() {
+        assertThat(clockState.bottomMinuteLamps == List(BOTTOM_MIN_LAMP_COUNT) { LampColour.OFF }).isTrue()
     }
 }
