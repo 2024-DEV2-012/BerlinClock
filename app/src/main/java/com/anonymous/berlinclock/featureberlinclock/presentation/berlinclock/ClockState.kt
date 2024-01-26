@@ -15,5 +15,6 @@ data class ClockState(
     val topHourLamps: TopHourLamps = List(HOUR_LAMP_COUNT) { LampColour.OFF },
     val bottomHourLamps: BottomHourLamps = List(HOUR_LAMP_COUNT) { LampColour.OFF },
     val topMinuteLamps: TopMinuteLamps = List(TOP_MIN_LAMP_COUNT) { LampColour.OFF },
-    val bottomMinuteLamps: BottomMinuteLamps = List(BOTTOM_MIN_LAMP_COUNT) { LampColour.OFF }
+    val bottomMinuteLamps: BottomMinuteLamps = List(BOTTOM_MIN_LAMP_COUNT) { LampColour.OFF },
+    val normalTime: String = ""
 )
