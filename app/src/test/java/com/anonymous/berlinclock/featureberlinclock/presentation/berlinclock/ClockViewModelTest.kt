@@ -2,9 +2,14 @@ package com.anonymous.berlinclock.featureberlinclock.presentation.berlinclock
 
 import com.anonymous.berlinclock.MainDispatcherRule
 import com.anonymous.berlinclock.core.util.BOTTOM_MIN_LAMP_COUNT
+import com.anonymous.berlinclock.core.util.BottomHourLamps
+import com.anonymous.berlinclock.core.util.BottomMinuteLamps
 import com.anonymous.berlinclock.core.util.HOUR_LAMP_COUNT
 import com.anonymous.berlinclock.core.util.LampColour
+import com.anonymous.berlinclock.core.util.SecondLamp
 import com.anonymous.berlinclock.core.util.TOP_MIN_LAMP_COUNT
+import com.anonymous.berlinclock.core.util.TopHourLamps
+import com.anonymous.berlinclock.core.util.TopMinuteLamps
 import com.anonymous.berlinclock.featureberlinclock.domain.model.BerlinClock
 import com.anonymous.berlinclock.featureberlinclock.domain.usecase.GetClockData
 import com.google.common.truth.Truth.assertThat
@@ -12,6 +17,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -19,20 +25,27 @@ class ClockViewModelTest {
 
     private lateinit var viewModel: ClockViewModel
     private var useCase = mockk<GetClockData>()
+    private lateinit var secondLamp: SecondLamp
+    private lateinit var topHourLamps: TopHourLamps
+    private lateinit var bottomHourLamps: BottomHourLamps
+    private lateinit var topMinuteLamps: TopMinuteLamps
+    private lateinit var bottomMinuteLamps: BottomMinuteLamps
+    private lateinit var normalTime: String
+    private lateinit var expectedClock: BerlinClock
 
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
-    @Test
-    fun `check berlin clock lamps are updating for the automatic clock scenario`() = runTest {
+    @Before
+    fun setUp() {
         viewModel = ClockViewModel(useCase)
-        val secondLamp = LampColour.YELLOW
-        val topHourLamps = List(HOUR_LAMP_COUNT) { LampColour.RED }
-        val bottomHourLamps = List(HOUR_LAMP_COUNT) { LampColour.RED }
-        val topMinuteLamps = MutableList(TOP_MIN_LAMP_COUNT) { LampColour.YELLOW }
-        val bottomMinuteLamps = List(BOTTOM_MIN_LAMP_COUNT) { LampColour.YELLOW }
-        val normalTime = "11:12:08"
-        val expectedClockState = BerlinClock(
+        secondLamp = LampColour.YELLOW
+        topHourLamps = List(HOUR_LAMP_COUNT) { LampColour.RED }
+        bottomHourLamps = List(HOUR_LAMP_COUNT) { LampColour.RED }
+        topMinuteLamps = MutableList(TOP_MIN_LAMP_COUNT) { LampColour.YELLOW }
+        bottomMinuteLamps = List(BOTTOM_MIN_LAMP_COUNT) { LampColour.YELLOW }
+        normalTime = "11:12:08"
+        expectedClock = BerlinClock(
             secondLamp = secondLamp,
             topHourLamps = topHourLamps,
             bottomHourLamps = bottomHourLamps,
@@ -40,7 +53,11 @@ class ClockViewModelTest {
             bottomMinuteLamps = bottomMinuteLamps,
             normalTime = normalTime
         )
-        every { useCase() } returns flowOf(expectedClockState)
+    }
+
+    @Test
+    fun `check berlin clock lamps are updating for the automatic clock scenario`() = runTest {
+        every { useCase() } returns flowOf(expectedClock)
         viewModel.onEvent(ClockEvent.StartAutomaticClock)
         val clockState = viewModel.clockState.value
         clockState.let {
@@ -49,31 +66,16 @@ class ClockViewModelTest {
                         it.topHourLamps == topHourLamps &&
                         it.bottomHourLamps == bottomHourLamps &&
                         it.topMinuteLamps == topMinuteLamps &&
-                        it.bottomMinuteLamps == bottomMinuteLamps
+                        it.bottomMinuteLamps == bottomMinuteLamps &&
+                        it.normalTime == normalTime
             ).isTrue()
         }
-
     }
 
     @Test
     fun `check berlin clock lamps are updating for the manual clock scenario`() {
-        viewModel = ClockViewModel(useCase)
-        val secondLamp = LampColour.YELLOW
-        val topHourLamps = List(HOUR_LAMP_COUNT) { LampColour.RED }
-        val bottomHourLamps = List(HOUR_LAMP_COUNT) { LampColour.RED }
-        val topMinuteLamps = MutableList(TOP_MIN_LAMP_COUNT) { LampColour.YELLOW }
-        val bottomMinuteLamps = List(BOTTOM_MIN_LAMP_COUNT) { LampColour.YELLOW }
-        val normalTime = "11:12:08"
-        val expectedClock = BerlinClock(
-            secondLamp = secondLamp,
-            topHourLamps = topHourLamps,
-            bottomHourLamps = bottomHourLamps,
-            topMinuteLamps = topMinuteLamps,
-            bottomMinuteLamps = bottomMinuteLamps,
-            normalTime = normalTime
-        )
         every { useCase(any()) } returns expectedClock
-        viewModel.onEvent(ClockEvent.UpdateClock("11:12:08"))
+        viewModel.onEvent(ClockEvent.UpdateClock(normalTime))
         val clockState = viewModel.clockState.value
         clockState.let {
             assertThat(
@@ -81,7 +83,8 @@ class ClockViewModelTest {
                         it.topHourLamps == topHourLamps &&
                         it.bottomHourLamps == bottomHourLamps &&
                         it.topMinuteLamps == topMinuteLamps &&
-                        it.bottomMinuteLamps == bottomMinuteLamps
+                        it.bottomMinuteLamps == bottomMinuteLamps &&
+                        it.normalTime == normalTime
             ).isTrue()
         }
     }
