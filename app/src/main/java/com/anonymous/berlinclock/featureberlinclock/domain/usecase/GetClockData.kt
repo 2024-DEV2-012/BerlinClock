@@ -5,18 +5,20 @@ import com.anonymous.berlinclock.core.util.BottomHourLamps
 import com.anonymous.berlinclock.core.util.BottomMinuteLamps
 import com.anonymous.berlinclock.core.util.HOUR_LAMP_COUNT
 import com.anonymous.berlinclock.core.util.HOUR_MAX_VALUE
-import com.anonymous.berlinclock.core.util.TopHourLamps
 import com.anonymous.berlinclock.core.util.LampColour
 import com.anonymous.berlinclock.core.util.MESSAGE_INPUT_GREATER_THAN_23
 import com.anonymous.berlinclock.core.util.MESSAGE_INPUT_GREATER_THAN_59
 import com.anonymous.berlinclock.core.util.MESSAGE_INPUT_LESS_THAN_0
-import com.anonymous.berlinclock.core.util.TIME_MAX_VALUE
 import com.anonymous.berlinclock.core.util.SecondLamp
+import com.anonymous.berlinclock.core.util.TIME_FORMAT
+import com.anonymous.berlinclock.core.util.TIME_MAX_VALUE
 import com.anonymous.berlinclock.core.util.TIME_MIN_VALUE
 import com.anonymous.berlinclock.core.util.TOP_HOUR_LAMP_VALUE
 import com.anonymous.berlinclock.core.util.TOP_MIN_LAMP_COUNT
 import com.anonymous.berlinclock.core.util.TOP_MIN_LAMP_VALUE
+import com.anonymous.berlinclock.core.util.TopHourLamps
 import com.anonymous.berlinclock.core.util.TopMinuteLamps
+import com.anonymous.berlinclock.core.util.formattedDate
 import com.anonymous.berlinclock.core.util.getQuotient
 import com.anonymous.berlinclock.core.util.getReminder
 import com.anonymous.berlinclock.core.util.isEven
@@ -27,16 +29,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
 
 class GetClockData {
 
     operator fun invoke(): Flow<BerlinClock> = flow {
         while (true) {
-            val currentDate = DateTime.now()
-            val formattedTime = DateTimeFormat.forPattern("HH:mm:ss").print(currentDate)
+            val formattedTime = DateTime.now().formattedDate(TIME_FORMAT)
             emit(invoke(formattedTime))
-            delay(1000)
+            delay(DELAY)
         }
     }
 
@@ -115,6 +115,10 @@ class GetClockData {
                 if (inputTime < TIME_MIN_VALUE) MESSAGE_INPUT_LESS_THAN_0 else upperBoundMsg
             )
         }
+    }
+
+    companion object {
+        const val DELAY: Long = 1000
     }
 
 }
