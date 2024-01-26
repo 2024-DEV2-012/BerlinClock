@@ -1,5 +1,6 @@
 package com.anonymous.berlinclock.featureberlinclock.presentation.berlinclock
 
+import com.anonymous.berlinclock.core.util.BottomHourLamps
 import com.anonymous.berlinclock.core.util.HOUR_LAMP_COUNT
 import com.anonymous.berlinclock.core.util.LampColour
 import com.anonymous.berlinclock.core.util.SecondLamp
@@ -7,5 +8,6 @@ import com.anonymous.berlinclock.core.util.TopHourLamps
 
 data class ClockState(
     val secondLamp: SecondLamp = LampColour.OFF,
-    val topHourLamps: TopHourLamps = List(HOUR_LAMP_COUNT) { LampColour.OFF }
+    val topHourLamps: TopHourLamps = List(HOUR_LAMP_COUNT) { LampColour.OFF },
+    val bottomHourLamps: BottomHourLamps = List(HOUR_LAMP_COUNT) { LampColour.OFF }
 )

@@ -19,4 +19,10 @@ class ClockStateTest {
         clockState = ClockState()
         assertThat(clockState.topHourLamps == List(HOUR_LAMP_COUNT) { LampColour.OFF }).isTrue()
     }
+
+    @Test
+    fun `check bottom hour lamps are initially OFF`() {
+        clockState = ClockState()
+        assertThat(clockState.bottomHourLamps == List(HOUR_LAMP_COUNT) { LampColour.OFF }).isTrue()
+    }
 }
