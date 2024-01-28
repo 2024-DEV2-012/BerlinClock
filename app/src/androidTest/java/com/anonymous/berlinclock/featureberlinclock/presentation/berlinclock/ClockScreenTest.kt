@@ -2,14 +2,18 @@ package com.anonymous.berlinclock.featureberlinclock.presentation.berlinclock
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertIsOff
 import androidx.compose.ui.test.assertIsOn
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextInput
 import com.anonymous.berlinclock.MainActivity
 import com.anonymous.berlinclock.core.util.BOTTOM_MIN_LAMP_COUNT
+import com.anonymous.berlinclock.core.util.EMPTY_STRING
 import com.anonymous.berlinclock.core.util.HOUR_LAMP_COUNT
 import com.anonymous.berlinclock.core.util.TOP_MIN_LAMP_COUNT
 import com.anonymous.berlinclock.core.util.TestTags
@@ -85,6 +89,34 @@ class ClockScreenTest {
         timeSelectorUiComponents.forEach {
             composeRule.onNodeWithContentDescription(it).assertIsDisplayed()
         }
+    }
+
+    @Test
+    fun validateShowBerlinTimeButtonIsDisabledUntilAllThreeHourMinuteAndSecondFieldsAreFilled() {
+        composeRule.onNodeWithContentDescription(TestTags.TOGGLE).performClick()
+        composeRule.onNodeWithContentDescription(TestTags.TOGGLE).assertIsOff()
+        TestTags.let {
+            listOf(
+                it.HOUR_SELECTOR,
+                it.MINUTE_SELECTOR,
+                it.SECOND_SELECTOR
+            ).forEach { contentDesc ->
+                composeRule.onNodeWithContentDescription(contentDesc).performTextInput(EMPTY_STRING)
+            }
+            composeRule.onNodeWithContentDescription(TestTags.SHOW_BERLIN_TIME_BUTTON)
+                .assertIsNotEnabled()
+            composeRule.onNodeWithContentDescription(it.HOUR_SELECTOR).performTextInput("1")
+            composeRule.onNodeWithContentDescription(TestTags.SHOW_BERLIN_TIME_BUTTON)
+                .assertIsNotEnabled()
+            composeRule.onNodeWithContentDescription(it.MINUTE_SELECTOR).performTextInput("1")
+            composeRule.onNodeWithContentDescription(TestTags.SHOW_BERLIN_TIME_BUTTON)
+                .assertIsNotEnabled()
+            composeRule.onNodeWithContentDescription(it.SECOND_SELECTOR).performTextInput("1")
+            composeRule.onNodeWithContentDescription(TestTags.SHOW_BERLIN_TIME_BUTTON)
+                .assertIsEnabled()
+        }
+
+
     }
 
     companion object {
