@@ -3,6 +3,7 @@ package com.anonymous.berlinclock.featureberlinclock.presentation.berlinclock
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsOff
+import androidx.compose.ui.test.assertIsOn
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
@@ -70,16 +71,8 @@ class ClockScreenTest {
     }
 
     @Test
-    fun validateTimeSelectorIsHiddenInitially() {
-        val timeSelectorUiComponents = TestTags.let {
-            listOf(
-                it.TIME_SELECTOR,
-                it.HOUR_SELECTOR,
-                it.MINUTE_SELECTOR,
-                it.SECOND_SELECTOR,
-                it.SHOW_BERLIN_TIME_BUTTON
-            )
-        }
+    fun validateTimeSelectorIsHiddenAndAutomaticToggleIsOnInitially() {
+        composeRule.onNodeWithContentDescription(TestTags.TOGGLE).assertIsOn()
         timeSelectorUiComponents.forEach {
             composeRule.onNodeWithContentDescription(it).assertDoesNotExist()
         }
@@ -87,6 +80,14 @@ class ClockScreenTest {
 
     @Test
     fun validateTimeSelectorIsDisplayedWhenAutomaticClockIsOff() {
+        composeRule.onNodeWithContentDescription(TestTags.TOGGLE).performClick()
+        composeRule.onNodeWithContentDescription(TestTags.TOGGLE).assertIsOff()
+        timeSelectorUiComponents.forEach {
+            composeRule.onNodeWithContentDescription(it).assertIsDisplayed()
+        }
+    }
+
+    companion object {
         val timeSelectorUiComponents = TestTags.let {
             listOf(
                 it.TIME_SELECTOR,
@@ -95,11 +96,6 @@ class ClockScreenTest {
                 it.SECOND_SELECTOR,
                 it.SHOW_BERLIN_TIME_BUTTON
             )
-        }
-        composeRule.onNodeWithContentDescription(TestTags.TOGGLE).performClick()
-        composeRule.onNodeWithContentDescription(TestTags.TOGGLE).assertIsOff()
-        timeSelectorUiComponents.forEach {
-            composeRule.onNodeWithContentDescription(it).assertIsDisplayed()
         }
     }
 }
