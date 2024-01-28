@@ -2,9 +2,11 @@ package com.anonymous.berlinclock.featureberlinclock.presentation.berlinclock
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsOff
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.performClick
 import com.anonymous.berlinclock.MainActivity
 import com.anonymous.berlinclock.core.util.BOTTOM_MIN_LAMP_COUNT
 import com.anonymous.berlinclock.core.util.HOUR_LAMP_COUNT
@@ -80,6 +82,24 @@ class ClockScreenTest {
         }
         timeSelectorUiComponents.forEach {
             composeRule.onNodeWithContentDescription(it).assertDoesNotExist()
+        }
+    }
+
+    @Test
+    fun validateTimeSelectorIsDisplayedWhenAutomaticClockIsOff() {
+        val timeSelectorUiComponents = TestTags.let {
+            listOf(
+                it.TIME_SELECTOR,
+                it.HOUR_SELECTOR,
+                it.MINUTE_SELECTOR,
+                it.SECOND_SELECTOR,
+                it.SHOW_BERLIN_TIME_BUTTON
+            )
+        }
+        composeRule.onNodeWithContentDescription(TestTags.TOGGLE).performClick()
+        composeRule.onNodeWithContentDescription(TestTags.TOGGLE).assertIsOff()
+        timeSelectorUiComponents.forEach {
+            composeRule.onNodeWithContentDescription(it).assertIsDisplayed()
         }
     }
 }

@@ -86,7 +86,9 @@ fun ClockScreen(
                     verticalArrangement = Arrangement.Center,
                     modifier = Modifier.padding(horizontal = 8.dp)
                 ) {
-                    ToggleButton()
+                    ToggleButton() { isToggleOn ->
+                        showTimeSelector = !isToggleOn
+                    }
                     if (showTimeSelector) {
                         TimeSelector()
                     }
