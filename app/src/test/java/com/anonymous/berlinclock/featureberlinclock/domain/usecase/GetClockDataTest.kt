@@ -15,6 +15,7 @@ import com.anonymous.berlinclock.featureberlinclock.domain.model.BerlinClock
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import kotlinx.coroutines.test.runTest
 import org.joda.time.DateTime
 import org.joda.time.DateTimeUtils
@@ -456,6 +457,7 @@ class GetClockDataTest {
             }
             cancelAndIgnoreRemainingEvents()
         }
+        unmockkStatic(DateTimeFormat::class)
     }
 
 }
