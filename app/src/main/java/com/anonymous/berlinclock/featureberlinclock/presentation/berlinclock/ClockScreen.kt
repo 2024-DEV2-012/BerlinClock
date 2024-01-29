@@ -133,7 +133,7 @@ fun TimeSelector() {
             OutlinedTextField(
                 value = selectedHour,
                 onValueChange = {
-                    if (it.isDigitsOnly()) {
+                    if (it.isDigitsOnly() && it.length <= 2) {
                         selectedHour = it
                     }
                 },
@@ -153,7 +153,7 @@ fun TimeSelector() {
             OutlinedTextField(
                 value = selectedMinute,
                 onValueChange = {
-                    if (it.isDigitsOnly()) {
+                    if (it.isDigitsOnly() && it.length <= 2 ) {
                         selectedMinute = it
                     }
                 },
@@ -173,7 +173,7 @@ fun TimeSelector() {
             OutlinedTextField(
                 value = selectedSecond,
                 onValueChange = {
-                    if (it.isDigitsOnly()) {
+                    if (it.isDigitsOnly() && it.length <= 2 ) {
                         selectedSecond = it
                     }
                 },
