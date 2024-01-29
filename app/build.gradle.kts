@@ -47,6 +47,12 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/LICENSE.md"
+            excludes += "META-INF/LICENSE-notice.md"
+        }
+
+        jniLibs {
+            useLegacyPackaging = true
         }
     }
 }
@@ -84,6 +90,7 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation("com.google.truth:truth:1.1.4")
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.44")
+    androidTestImplementation("io.mockk:mockk-android:1.13.9")
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.48")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")

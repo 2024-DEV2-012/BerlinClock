@@ -78,13 +78,19 @@ fun ClockScreen(
                     verticalArrangement = Arrangement.Center,
                     modifier = Modifier.padding(horizontal = 8.dp)
                 ) {
-                    ToggleButton() { isToggleOn ->
+                    ToggleButton { isToggleOn ->
                         showTimeSelector = !isToggleOn
+                        if (!isToggleOn) {
+                            onEvent(ClockEvent.StopAutomaticClock)
+                        }
+
                     }
                     if (showTimeSelector) {
-                        TimeSelector { it ->
+                        TimeSelector {
                             onEvent(ClockEvent.UpdateClock(it))
                         }
+                    } else {
+                        onEvent(ClockEvent.StartAutomaticClock)
                     }
                     NormalTime(clockState.normalTime)
                     BerlinClock(clockState = clockState)
