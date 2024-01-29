@@ -32,7 +32,9 @@ import com.anonymous.berlinclock.core.util.TIME_SELECTOR_INPUT_MAX_LENGTH
 import com.anonymous.berlinclock.core.util.TestTags
 
 @Composable
-fun TimeSelector() {
+fun TimeSelector(
+    showBerlinTime: (String) -> Unit
+) {
     var selectedHour by remember { mutableStateOf("") }
     var selectedMinute by remember { mutableStateOf("") }
     var selectedSecond by remember { mutableStateOf("") }
@@ -125,6 +127,7 @@ fun TimeSelector() {
         Spacer(modifier = Modifier.height(12.dp))
         Button(
             onClick = {
+                showBerlinTime("$selectedHour:$selectedMinute:$selectedSecond")
             },
             modifier = Modifier
                 .semantics {

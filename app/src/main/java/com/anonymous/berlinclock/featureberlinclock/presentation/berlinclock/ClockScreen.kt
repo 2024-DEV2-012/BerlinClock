@@ -39,7 +39,8 @@ import kotlinx.coroutines.flow.StateFlow
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ClockScreen(
-    state: StateFlow<ClockState>
+    state: StateFlow<ClockState>,
+    onEvent: (ClockEvent) -> Unit
 ) {
     val clockState by state.collectAsState()
     Surface(
@@ -81,9 +82,11 @@ fun ClockScreen(
                         showTimeSelector = !isToggleOn
                     }
                     if (showTimeSelector) {
-                        TimeSelector()
+                        TimeSelector { it ->
+                            onEvent(ClockEvent.UpdateClock(it))
+                        }
                     }
-                    NormalTime()
+                    NormalTime(clockState.normalTime)
                     BerlinClock(clockState = clockState)
                 }
             }
@@ -92,13 +95,13 @@ fun ClockScreen(
 }
 
 @Composable
-fun NormalTime() {
+fun NormalTime(time: String) {
     Text(
         modifier = Modifier
             .padding(15.dp)
             .testTag(TestTags.NORMAL_TIME),
         style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Bold),
-        text = "00:00:01",
+        text = time,
         textAlign = TextAlign.Center
     )
 }
@@ -108,7 +111,8 @@ fun NormalTime() {
 fun ClockPreview() {
     ClockScreen(
         state = MutableStateFlow(
-            ClockState()
-        )
+            ClockState(),
+        ),
+        onEvent = {}
     )
 }

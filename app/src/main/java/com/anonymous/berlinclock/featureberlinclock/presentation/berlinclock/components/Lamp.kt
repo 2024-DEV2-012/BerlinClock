@@ -1,5 +1,6 @@
 package com.anonymous.berlinclock.featureberlinclock.presentation.berlinclock.components
 
+import android.graphics.Color.parseColor
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -14,11 +15,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import com.anonymous.berlinclock.core.util.LampColour
 
 @Composable
 fun Lamp(
     tag: String,
-    size: Int = 60
+    size: Int = 60,
+    lamp: LampColour
 ) {
     Column(modifier = Modifier.padding(2.dp)) {
         Box(
@@ -29,7 +32,7 @@ fun Lamp(
                 .size(size.dp)
                 .border(2.dp, Color.DarkGray, RoundedCornerShape(8.dp))
                 .clip(RoundedCornerShape(8.dp))
-                .background(Color.White)
+                .background(Color(parseColor(lamp.color)))
         )
     }
 }
