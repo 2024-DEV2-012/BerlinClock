@@ -176,7 +176,7 @@ class ClockScreenTest {
         timeSelectorInputFields.forEach {
             listOf("0", "00").forEach { input ->
                 composeRule.onNodeWithContentDescription(it)
-                    .performTextReplacement(input.toString())
+                    .performTextReplacement(input)
                 composeRule.onNodeWithContentDescription(it).assertTextEquals(input)
             }
         }
