@@ -98,7 +98,7 @@ fun NormalTime() {
             .padding(15.dp)
             .testTag(TestTags.NORMAL_TIME),
         style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Bold),
-        text = "Time",
+        text = "00:00:01",
         textAlign = TextAlign.Center
     )
 }
