@@ -95,11 +95,11 @@ class ClockScreenTest {
         composeRule.onNodeWithContentDescription(TOGGLE).assertIsOff()
         //Then
         composeRule.onNodeWithTag(NORMAL_TIME).assertIsDisplayed()
-        checkLampDetails(lampName = lampName, lampColor = lampColor)
-        checkLampDetails(HOUR_LAMP_COUNT, TOP_HOUR_LAMP)
-        checkLampDetails(HOUR_LAMP_COUNT, BOTTOM_HOUR_LAMP)
-        checkLampDetails(TOP_MIN_LAMP_COUNT, TOP_MIN_LAMP)
-        checkLampDetails(BOTTOM_MIN_LAMP_COUNT, BOTTOM_MIN_LAMP)
+        verifyLampDetails(lampName = lampName, lampColor = lampColor)
+        verifyLampDetails(HOUR_LAMP_COUNT, TOP_HOUR_LAMP)
+        verifyLampDetails(HOUR_LAMP_COUNT, BOTTOM_HOUR_LAMP)
+        verifyLampDetails(TOP_MIN_LAMP_COUNT, TOP_MIN_LAMP)
+        verifyLampDetails(BOTTOM_MIN_LAMP_COUNT, BOTTOM_MIN_LAMP)
     }
 
     @Test
@@ -122,11 +122,11 @@ class ClockScreenTest {
         composeRule.onNodeWithContentDescription(SHOW_BERLIN_TIME_BUTTON).performClick()
         //Then
         composeRule.onNodeWithTag(NORMAL_TIME).assertTextEquals(timeString)
-        checkLampDetails(lampName = secondLamp.name, lampColor = secondLamp.color)
-        checkLampDetails(topHourLamps, TOP_HOUR_LAMP)
-        checkLampDetails(bottomHourLamps, BOTTOM_HOUR_LAMP)
-        checkLampDetails(topMinLamps, TOP_MIN_LAMP)
-        checkLampDetails(bottomMinLamps, BOTTOM_MIN_LAMP)
+        verifyLampDetails(lampName = secondLamp.name, lampColor = secondLamp.color)
+        verifyLampDetails(topHourLamps, TOP_HOUR_LAMP)
+        verifyLampDetails(bottomHourLamps, BOTTOM_HOUR_LAMP)
+        verifyLampDetails(topMinLamps, TOP_MIN_LAMP)
+        verifyLampDetails(bottomMinLamps, BOTTOM_MIN_LAMP)
     }
 
     @Test
@@ -154,12 +154,12 @@ class ClockScreenTest {
         Espresso.closeSoftKeyboard()
         //Then
         composeRule.onNodeWithTag(NORMAL_TIME).assertTextEquals(timeString)
-        checkLampDetails(lampName = secondLamp.name, lampColor = secondLamp.color)
-        checkLampDetails(lampName = secondLamp.name, lampColor = secondLamp.color)
-        checkLampDetails(topHourLamps, TOP_HOUR_LAMP)
-        checkLampDetails(bottomHourLamps, BOTTOM_HOUR_LAMP)
-        checkLampDetails(topMinLamps, TOP_MIN_LAMP)
-        checkLampDetails(bottomMinLamps, BOTTOM_MIN_LAMP)
+        verifyLampDetails(lampName = secondLamp.name, lampColor = secondLamp.color)
+        verifyLampDetails(lampName = secondLamp.name, lampColor = secondLamp.color)
+        verifyLampDetails(topHourLamps, TOP_HOUR_LAMP)
+        verifyLampDetails(bottomHourLamps, BOTTOM_HOUR_LAMP)
+        verifyLampDetails(topMinLamps, TOP_MIN_LAMP)
+        verifyLampDetails(bottomMinLamps, BOTTOM_MIN_LAMP)
     }
 
     @Test
@@ -185,11 +185,11 @@ class ClockScreenTest {
         composeRule.onNodeWithContentDescription(TOGGLE).assertIsOn()
         //Then
         composeRule.onNodeWithTag(NORMAL_TIME).assertTextEquals(timeString)
-        checkLampDetails(lampName = secondLamp.name, lampColor = secondLamp.color)
-        checkLampDetails(topHourLamps, TOP_HOUR_LAMP)
-        checkLampDetails(bottomHourLamps, BOTTOM_HOUR_LAMP)
-        checkLampDetails(topMinLamps, TOP_MIN_LAMP)
-        checkLampDetails(bottomMinLamps, BOTTOM_MIN_LAMP)
+        verifyLampDetails(lampName = secondLamp.name, lampColor = secondLamp.color)
+        verifyLampDetails(topHourLamps, TOP_HOUR_LAMP)
+        verifyLampDetails(bottomHourLamps, BOTTOM_HOUR_LAMP)
+        verifyLampDetails(topMinLamps, TOP_MIN_LAMP)
+        verifyLampDetails(bottomMinLamps, BOTTOM_MIN_LAMP)
 
         //Stop scenario
         //Given
@@ -206,11 +206,11 @@ class ClockScreenTest {
         unmockkStatic(DateTimeFormat::class)
         //Then
         composeRule.onNodeWithTag(NORMAL_TIME).assertTextEquals(timeStringStop)
-        checkLampDetails(lampName = secondLampStop.name, lampColor = secondLampStop.color)
-        checkLampDetails(topHourLampsStop, TOP_HOUR_LAMP)
-        checkLampDetails(bottomHourLampsStop, BOTTOM_HOUR_LAMP)
-        checkLampDetails(topMinLampsStop, TOP_MIN_LAMP)
-        checkLampDetails(bottomMinLampsStop, BOTTOM_MIN_LAMP)
+        verifyLampDetails(lampName = secondLampStop.name, lampColor = secondLampStop.color)
+        verifyLampDetails(topHourLampsStop, TOP_HOUR_LAMP)
+        verifyLampDetails(bottomHourLampsStop, BOTTOM_HOUR_LAMP)
+        verifyLampDetails(topMinLampsStop, TOP_MIN_LAMP)
+        verifyLampDetails(bottomMinLampsStop, BOTTOM_MIN_LAMP)
     }
 
     @Test
@@ -366,7 +366,7 @@ class ClockScreenTest {
         }
     }
 
-    private fun checkLampDetails(
+    private fun verifyLampDetails(
         lamps: MutableList<LampColour>,
         tagPrefix: String
     ) {
@@ -376,7 +376,7 @@ class ClockScreenTest {
         }
     }
 
-    private fun checkLampDetails(
+    private fun verifyLampDetails(
         count: Int,
         tagPrefix: String,
         lampName: String = "OFF",
@@ -388,7 +388,7 @@ class ClockScreenTest {
         }
     }
 
-    private fun checkLampDetails(
+    private fun verifyLampDetails(
         tagPrefix: String = SECOND_LAMP,
         lampName: String,
         lampColor: String
