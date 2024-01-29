@@ -37,6 +37,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.text.isDigitsOnly
 import com.anonymous.berlinclock.R
 import com.anonymous.berlinclock.core.util.TestTags
 import com.anonymous.berlinclock.core.util.TestTags.TOP_BAR
@@ -132,7 +133,9 @@ fun TimeSelector() {
             OutlinedTextField(
                 value = selectedHour,
                 onValueChange = {
-                    selectedHour = it
+                    if (it.isDigitsOnly()) {
+                        selectedHour = it
+                    }
                 },
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Number
@@ -150,7 +153,9 @@ fun TimeSelector() {
             OutlinedTextField(
                 value = selectedMinute,
                 onValueChange = {
-                    selectedMinute = it
+                    if (it.isDigitsOnly()) {
+                        selectedMinute = it
+                    }
                 },
                 placeholder = { Text(text = stringResource(id = R.string.minute)) },
                 keyboardOptions = KeyboardOptions.Default.copy(
@@ -168,7 +173,9 @@ fun TimeSelector() {
             OutlinedTextField(
                 value = selectedSecond,
                 onValueChange = {
-                    selectedSecond = it
+                    if (it.isDigitsOnly()) {
+                        selectedSecond = it
+                    }
                 },
                 placeholder = { Text(text = stringResource(id = R.string.second)) },
                 keyboardOptions = KeyboardOptions.Default.copy(
