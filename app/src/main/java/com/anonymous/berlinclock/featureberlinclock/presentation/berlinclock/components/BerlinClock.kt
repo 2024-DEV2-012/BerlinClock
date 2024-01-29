@@ -24,6 +24,7 @@ import com.anonymous.berlinclock.core.util.LampColour
 import com.anonymous.berlinclock.core.util.TestTags
 import com.anonymous.berlinclock.core.util.TopHourLamps
 import com.anonymous.berlinclock.core.util.TopMinuteLamps
+import com.anonymous.berlinclock.core.util.getLampTag
 import com.anonymous.berlinclock.featureberlinclock.presentation.berlinclock.ClockState
 
 @Composable
@@ -46,7 +47,7 @@ fun SecondsLamp(lamp: LampColour) {
             .size(80.dp)
             .clip(CircleShape)
             .border(2.dp, Color.DarkGray, CircleShape)
-            .testTag("${TestTags.SECOND_LAMP}-${lamp.name}-${lamp.color}")
+            .testTag(TestTags.SECOND_LAMP.getLampTag(lamp.name, lamp.color))
             .background(Color(parseColor(lamp.color)))
     )
 }
@@ -71,7 +72,7 @@ fun TopHourLamps(modifier: Modifier, lamps: TopHourLamps) {
             ) {
                 val lamp = lamps[it]
                 Lamp(
-                    tag = "${TestTags.TOP_HOUR_LAMP}$it-${lamp.name}-${lamp.color}",
+                    tag = "${TestTags.TOP_HOUR_LAMP}$it".getLampTag(lamp.name, lamp.color),
                     lamp = lamp
                 )
             }
@@ -93,7 +94,7 @@ fun BottomHourLamps(modifier: Modifier, lamps: BottomHourLamps) {
             ) {
                 val lamp = lamps[it]
                 Lamp(
-                    tag = "${TestTags.BOTTOM_HOUR_LAMP}$it-${lamp.name}-${lamp.color}",
+                    tag = "${TestTags.BOTTOM_HOUR_LAMP}$it".getLampTag(lamp.name, lamp.color),
                     lamp = lamp
                 )
             }
@@ -121,7 +122,7 @@ fun TopMinuteLamps(lamps: TopMinuteLamps) {
             ) {
                 val lamp = lamps[it]
                 Lamp(
-                    tag = "${TestTags.TOP_MIN_LAMP}${it}-${lamp.name}-${lamp.color}",
+                    tag = "${TestTags.TOP_MIN_LAMP}${it}".getLampTag(lamp.name, lamp.color),
                     lamp = lamp
                 )
             }
@@ -143,7 +144,7 @@ fun BottomMinuteLamps(lamps: BottomMinuteLamps) {
             ) {
                 val lamp = lamps[it]
                 Lamp(
-                    tag = "${TestTags.BOTTOM_MIN_LAMP}$it-${lamp.name}-${lamp.color}",
+                    tag = "${TestTags.BOTTOM_MIN_LAMP}$it".getLampTag(lamp.name, lamp.color),
                     lamp = lamp
                 )
             }
