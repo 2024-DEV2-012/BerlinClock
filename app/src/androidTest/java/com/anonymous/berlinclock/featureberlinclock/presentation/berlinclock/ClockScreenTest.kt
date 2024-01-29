@@ -132,6 +132,19 @@ class ClockScreenTest {
         }
     }
 
+    @Test
+    fun checkSTimeSelectorFieldsAreUpdatingForInput1() {
+        val expectedValue = "1"
+        composeRule.onNodeWithContentDescription(TestTags.TOGGLE).performClick()
+        listOf(TestTags.HOUR_SELECTOR,
+            TestTags.MINUTE_SELECTOR,
+            TestTags.SECOND_SELECTOR,).forEach {
+            composeRule.onNodeWithContentDescription(it).assertIsDisplayed()
+            composeRule.onNodeWithContentDescription(it).performTextReplacement(expectedValue)
+            composeRule.onNodeWithContentDescription(it).assertTextEquals(expectedValue)
+        }
+    }
+
     companion object {
         val timeSelectorUiComponents = TestTags.let {
             listOf(
