@@ -98,11 +98,7 @@ class ClockScreenTest {
         composeRule.onNodeWithContentDescription(TestTags.TOGGLE).performClick()
         composeRule.onNodeWithContentDescription(TestTags.TOGGLE).assertIsOff()
         TestTags.let {
-            listOf(
-                it.HOUR_SELECTOR,
-                it.MINUTE_SELECTOR,
-                it.SECOND_SELECTOR
-            ).forEach { contentDesc ->
+            timeSelectorInputFields.forEach { contentDesc ->
                 composeRule.onNodeWithContentDescription(contentDesc).performTextInput(EMPTY_STRING)
             }
             composeRule.onNodeWithContentDescription(TestTags.SHOW_BERLIN_TIME_BUTTON)
@@ -123,11 +119,7 @@ class ClockScreenTest {
     fun checkSTimeSelectorFieldsAreUpdatingForInput0() {
         val expectedValue = "0"
         composeRule.onNodeWithContentDescription(TestTags.TOGGLE).performClick()
-        listOf(
-            TestTags.HOUR_SELECTOR,
-            TestTags.MINUTE_SELECTOR,
-            TestTags.SECOND_SELECTOR,
-        ).forEach {
+        timeSelectorInputFields.forEach {
             composeRule.onNodeWithContentDescription(it).assertIsDisplayed()
             composeRule.onNodeWithContentDescription(it).performTextReplacement(expectedValue)
             composeRule.onNodeWithContentDescription(it).assertTextEquals(expectedValue)
@@ -138,11 +130,7 @@ class ClockScreenTest {
     fun checkSTimeSelectorFieldsAreUpdatingForInput1() {
         val expectedValue = "1"
         composeRule.onNodeWithContentDescription(TestTags.TOGGLE).performClick()
-        listOf(
-            TestTags.HOUR_SELECTOR,
-            TestTags.MINUTE_SELECTOR,
-            TestTags.SECOND_SELECTOR,
-        ).forEach {
+        timeSelectorInputFields.forEach {
             composeRule.onNodeWithContentDescription(it).assertIsDisplayed()
             composeRule.onNodeWithContentDescription(it).performTextReplacement(expectedValue)
             composeRule.onNodeWithContentDescription(it).assertTextEquals(expectedValue)
@@ -153,11 +141,6 @@ class ClockScreenTest {
     fun checkSTimeSelectorFieldsAcceptsOnlyDigits() {
         val inputValues = listOf(",", ".", "ab")
         val digitInput = "14"
-        val timeSelectorInputFields = listOf(
-            TestTags.HOUR_SELECTOR,
-            TestTags.MINUTE_SELECTOR,
-            TestTags.SECOND_SELECTOR,
-        )
         composeRule.onNodeWithContentDescription(TestTags.TOGGLE).performClick()
         timeSelectorInputFields.forEach {
             composeRule.onNodeWithContentDescription(it).assertIsDisplayed()
@@ -183,5 +166,11 @@ class ClockScreenTest {
                 it.SHOW_BERLIN_TIME_BUTTON
             )
         }
+
+        val timeSelectorInputFields = listOf(
+            TestTags.HOUR_SELECTOR,
+            TestTags.MINUTE_SELECTOR,
+            TestTags.SECOND_SELECTOR,
+        )
     }
 }
