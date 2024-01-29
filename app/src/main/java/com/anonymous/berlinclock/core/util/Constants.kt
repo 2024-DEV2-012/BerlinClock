@@ -13,3 +13,4 @@ const val TOP_MIN_LAMP_VALUE = 5
 const val BOTTOM_MIN_LAMP_COUNT = 4
 const val TIME_FORMAT = "HH:mm:ss"
 const val EMPTY_STRING = ""
+const val TIME_SELECTOR_INPUT_MAX_LENGTH = 2
