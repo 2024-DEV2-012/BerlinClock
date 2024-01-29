@@ -73,6 +73,25 @@ class ClockViewModelTest {
     }
 
     @Test
+    fun `check stopping automatic clock scenario`() = runTest {
+        every { useCase() } returns flowOf(expectedClock)
+        viewModel.onEvent(ClockEvent.StartAutomaticClock)
+        val clockState = viewModel.clockState.value
+        clockState.let {
+            assertThat(
+                it.secondLamp == secondLamp &&
+                        it.topHourLamps == topHourLamps &&
+                        it.bottomHourLamps == bottomHourLamps &&
+                        it.topMinuteLamps == topMinuteLamps &&
+                        it.bottomMinuteLamps == bottomMinuteLamps &&
+                        it.normalTime == normalTime
+            ).isTrue()
+            viewModel.onEvent(ClockEvent.StopAutomaticClock)
+            assertThat(viewModel.clockState.value == ClockState()).isTrue()
+        }
+    }
+
+    @Test
     fun `check berlin clock lamps are updating for the manual clock scenario`() {
         every { useCase(any()) } returns expectedClock
         viewModel.onEvent(ClockEvent.UpdateClock(normalTime))
