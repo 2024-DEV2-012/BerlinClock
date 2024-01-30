@@ -60,16 +60,7 @@ class ClockViewModelTest {
         every { useCase() } returns flowOf(expectedClock)
         viewModel.onEvent(ClockEvent.StartAutomaticClock)
         val clockState = viewModel.clockState.value
-        clockState.let {
-            assertThat(
-                it.secondLamp == secondLamp &&
-                        it.topHourLamps == topHourLamps &&
-                        it.bottomHourLamps == bottomHourLamps &&
-                        it.topMinuteLamps == topMinuteLamps &&
-                        it.bottomMinuteLamps == bottomMinuteLamps &&
-                        it.normalTime == normalTime
-            ).isTrue()
-        }
+        verifyClockState(clockState)
     }
 
     @Test
@@ -77,18 +68,9 @@ class ClockViewModelTest {
         every { useCase() } returns flowOf(expectedClock)
         viewModel.onEvent(ClockEvent.StartAutomaticClock)
         val clockState = viewModel.clockState.value
-        clockState.let {
-            assertThat(
-                it.secondLamp == secondLamp &&
-                        it.topHourLamps == topHourLamps &&
-                        it.bottomHourLamps == bottomHourLamps &&
-                        it.topMinuteLamps == topMinuteLamps &&
-                        it.bottomMinuteLamps == bottomMinuteLamps &&
-                        it.normalTime == normalTime
-            ).isTrue()
-            viewModel.onEvent(ClockEvent.StopAutomaticClock)
-            assertThat(viewModel.clockState.value == ClockState()).isTrue()
-        }
+        verifyClockState(clockState)
+        viewModel.onEvent(ClockEvent.StopAutomaticClock)
+        assertThat(viewModel.clockState.value == ClockState()).isTrue()
     }
 
     @Test
@@ -96,6 +78,10 @@ class ClockViewModelTest {
         every { useCase(any()) } returns expectedClock
         viewModel.onEvent(ClockEvent.UpdateClock(normalTime))
         val clockState = viewModel.clockState.value
+        verifyClockState(clockState)
+    }
+
+    private fun verifyClockState(clockState: ClockState) {
         clockState.let {
             assertThat(
                 it.secondLamp == secondLamp &&
