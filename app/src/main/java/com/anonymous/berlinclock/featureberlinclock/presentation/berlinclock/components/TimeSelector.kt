@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
 import com.anonymous.berlinclock.R
 import com.anonymous.berlinclock.core.util.HOUR_MAX_VALUE
+import com.anonymous.berlinclock.core.util.TIME_DELIMITER
 import com.anonymous.berlinclock.core.util.TIME_MAX_VALUE
 import com.anonymous.berlinclock.core.util.TIME_MIN_VALUE
 import com.anonymous.berlinclock.core.util.TIME_SELECTOR_INPUT_MAX_LENGTH
@@ -127,7 +128,7 @@ fun TimeSelector(
         Spacer(modifier = Modifier.height(12.dp))
         Button(
             onClick = {
-                showBerlinTime("$selectedHour:$selectedMinute:$selectedSecond")
+                showBerlinTime("$selectedHour$TIME_DELIMITER$selectedMinute$TIME_DELIMITER$selectedSecond")
             },
             modifier = Modifier
                 .semantics {

@@ -115,7 +115,7 @@ class ClockScreenTest {
         val topMinLamps = MutableList(TOP_MIN_LAMP_COUNT) { LampColour.OFF }
         val bottomMinLamps = MutableList(BOTTOM_MIN_LAMP_COUNT) { LampColour.OFF }
         //When
-        callShowBerlinTImeManually(inputHour, inputMin, inputSec)
+        callShowBerlinTimeManually(inputHour, inputMin, inputSec)
         //Then
         composeRule.onNodeWithTag(NORMAL_TIME).assertTextEquals(timeString)
         verifyLampDetails(lampName = secondLamp.name, lampColor = secondLamp.color)
@@ -142,7 +142,7 @@ class ClockScreenTest {
         }
         val bottomMinLamps = MutableList(BOTTOM_MIN_LAMP_COUNT) { LampColour.YELLOW }
         //When
-        callShowBerlinTImeManually(inputHour, inputMin, inputSec)
+        callShowBerlinTimeManually(inputHour, inputMin, inputSec)
         Espresso.closeSoftKeyboard()
         //Then
         composeRule.onNodeWithTag(NORMAL_TIME).assertTextEquals(timeString)
@@ -388,7 +388,7 @@ class ClockScreenTest {
         composeRule.onNodeWithTag(tagPrefix.getLampTag(lampName, lampColor)).assertIsDisplayed()
     }
 
-    private fun callShowBerlinTImeManually(
+    private fun callShowBerlinTimeManually(
         inputHour: String,
         inputMin: String,
         inputSec: String
