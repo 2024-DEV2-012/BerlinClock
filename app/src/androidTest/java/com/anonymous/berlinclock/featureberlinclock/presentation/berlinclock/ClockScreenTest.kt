@@ -88,14 +88,14 @@ class ClockScreenTest {
     @Test
     fun validateBerlinClockIsVisibleInitially() {
         //Given
-        val lampName = "OFF"
-        val lampColor = "#FFFFFF"
+        val secondLampName = "YELLOW"
+        val secondLampColour = "#FFFF00"
         //When
         composeRule.onNodeWithContentDescription(TOGGLE).performClick()
         composeRule.onNodeWithContentDescription(TOGGLE).assertIsOff()
         //Then
         composeRule.onNodeWithTag(NORMAL_TIME).assertIsDisplayed()
-        verifyLampDetails(lampName = lampName, lampColor = lampColor)
+        verifyLampDetails(lampName = secondLampName, lampColor = secondLampColour)
         verifyLampDetails(HOUR_LAMP_COUNT, TOP_HOUR_LAMP)
         verifyLampDetails(HOUR_LAMP_COUNT, BOTTOM_HOUR_LAMP)
         verifyLampDetails(TOP_MIN_LAMP_COUNT, TOP_MIN_LAMP)
@@ -193,8 +193,8 @@ class ClockScreenTest {
 
         //Stop scenario
         //Given
-        val timeStringStop = "00:00:01"
-        val secondLampStop = LampColour.OFF
+        val timeStringStop = "00:00:00"
+        val secondLampStop = LampColour.YELLOW
         val topHourLampsStop = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         val bottomHourLampsStop = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         val topMinLampsStop = MutableList(TOP_MIN_LAMP_COUNT) { LampColour.OFF }

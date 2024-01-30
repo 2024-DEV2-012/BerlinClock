@@ -19,8 +19,8 @@ class ClockStateTest {
 
 
     @Test
-    fun `check secondLamp is initially OFF`() {
-        assertThat(clockState.secondLamp == LampColour.OFF).isTrue()
+    fun `check secondLamp is initially YELLOW`() {
+        assertThat(clockState.secondLamp == LampColour.YELLOW).isTrue()
     }
 
     @Test
