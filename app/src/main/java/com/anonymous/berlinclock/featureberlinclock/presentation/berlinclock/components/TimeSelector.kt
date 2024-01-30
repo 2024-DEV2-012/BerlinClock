@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -39,6 +40,7 @@ fun TimeSelector(
     var selectedHour by remember { mutableStateOf("") }
     var selectedMinute by remember { mutableStateOf("") }
     var selectedSecond by remember { mutableStateOf("") }
+    val focusManager = LocalFocusManager.current
     Column(
         modifier = Modifier
             .semantics {
@@ -129,6 +131,7 @@ fun TimeSelector(
         Button(
             onClick = {
                 showBerlinTime("$selectedHour$TIME_DELIMITER$selectedMinute$TIME_DELIMITER$selectedSecond")
+                focusManager.clearFocus()
             },
             modifier = Modifier
                 .semantics {
