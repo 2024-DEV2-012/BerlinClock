@@ -21,6 +21,7 @@ import com.anonymous.berlinclock.core.util.EMPTY_STRING
 import com.anonymous.berlinclock.core.util.HOUR_LAMP_COUNT
 import com.anonymous.berlinclock.core.util.HOUR_MAX_VALUE
 import com.anonymous.berlinclock.core.util.LampColour
+import com.anonymous.berlinclock.core.util.TIME_FORMAT
 import com.anonymous.berlinclock.core.util.TIME_MAX_VALUE
 import com.anonymous.berlinclock.core.util.TIME_MIN_VALUE
 import com.anonymous.berlinclock.core.util.TOP_MIN_LAMP_COUNT
@@ -38,6 +39,7 @@ import com.anonymous.berlinclock.core.util.TestTags.TOP_BAR
 import com.anonymous.berlinclock.core.util.TestTags.TOP_HOUR_LAMP
 import com.anonymous.berlinclock.core.util.TestTags.TOP_MIN_LAMP
 import com.anonymous.berlinclock.core.util.getLampTag
+import com.anonymous.berlinclock.core.util.getTimeMillis
 import com.anonymous.berlinclock.featureberlinclock.presentation.navutils.BerlinClockNavGraph
 import com.anonymous.berlinclock.ui.theme.BerlinClockTheme
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -85,6 +87,11 @@ class ClockScreenTest {
         composeRule.onNodeWithContentDescription(TOGGLE).assertIsDisplayed()
     }
 
+
+    /**
+     * This UI test is success in local emulator and devices,
+     * but failing in Github actions pipeline
+     */
     @Test
     fun validateBerlinClockIsVisibleInitially() {
         //Given
@@ -102,6 +109,11 @@ class ClockScreenTest {
         verifyLampDetails(BOTTOM_MIN_LAMP_COUNT, BOTTOM_MIN_LAMP)
     }
 
+
+    /**
+     * This UI test is success in local emulator and devices,
+     * but failing in Github actions pipeline
+     */
     @Test
     fun validateAllLampsAreOffWithWhiteBgColorExceptSecondLampForManualInput() {
         //Given
@@ -125,6 +137,10 @@ class ClockScreenTest {
         verifyLampDetails(bottomMinLamps, BOTTOM_MIN_LAMP)
     }
 
+    /**
+     * This UI test is success in local emulator and devices,
+     * but failing in Github actions pipeline
+     */
     @Test
     fun validateLampColorsForARandomTime() {
         //Given
@@ -154,12 +170,17 @@ class ClockScreenTest {
         verifyLampDetails(bottomMinLamps, BOTTOM_MIN_LAMP)
     }
 
+
+    /**
+     * This UI test is success in local emulator and devices,
+     * but failing in Github actions pipeline
+     */
     @Test
     fun validateAutomaticClockStartAndStopScenario() {
         // Start scenario
         //Given
         val timeString = "01:20:29" // in hh:mm:ss format
-        val millis = 1706212229312
+        val millis = timeString.getTimeMillis(TIME_FORMAT)
         val secondLamp = LampColour.OFF
         val topHourLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         val bottomHourLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
@@ -363,7 +384,12 @@ class ClockScreenTest {
         tagPrefix: String
     ) {
         lamps.forEachIndexed { i, lamp ->
-            composeRule.onNodeWithContentDescription("${tagPrefix}${i}".getLampTag(lamp.name, lamp.color))
+            composeRule.onNodeWithContentDescription(
+                "${tagPrefix}${i}".getLampTag(
+                    lamp.name,
+                    lamp.color
+                )
+            )
                 .assertIsDisplayed()
         }
     }
@@ -375,7 +401,12 @@ class ClockScreenTest {
         lampColor: String = "#FFFFFF"
     ) {
         repeat(count) {
-            composeRule.onNodeWithContentDescription("${tagPrefix}$it".getLampTag(lampName, lampColor))
+            composeRule.onNodeWithContentDescription(
+                "${tagPrefix}$it".getLampTag(
+                    lampName,
+                    lampColor
+                )
+            )
                 .assertIsDisplayed()
         }
     }
@@ -385,7 +416,8 @@ class ClockScreenTest {
         lampName: String,
         lampColor: String
     ) {
-        composeRule.onNodeWithContentDescription(tagPrefix.getLampTag(lampName, lampColor)).assertIsDisplayed()
+        composeRule.onNodeWithContentDescription(tagPrefix.getLampTag(lampName, lampColor))
+            .assertIsDisplayed()
     }
 
     private fun callShowBerlinTimeManually(
