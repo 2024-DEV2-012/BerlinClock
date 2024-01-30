@@ -16,7 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.anonymous.berlinclock.core.util.BottomHourLamps
 import com.anonymous.berlinclock.core.util.BottomMinuteLamps
@@ -47,8 +48,10 @@ fun SecondsLamp(lamp: LampColour) {
             .size(80.dp)
             .clip(CircleShape)
             .border(2.dp, Color.DarkGray, CircleShape)
-            .testTag(TestTags.SECOND_LAMP.getLampTag(lamp.name, lamp.color))
             .background(Color(parseColor(lamp.color)))
+            .semantics {
+               contentDescription = TestTags.SECOND_LAMP.getLampTag(lamp.name, lamp.color)
+            }
     )
 }
 

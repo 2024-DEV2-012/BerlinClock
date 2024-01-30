@@ -94,7 +94,7 @@ class ClockScreenTest {
         composeRule.onNodeWithContentDescription(TOGGLE).performClick()
         composeRule.onNodeWithContentDescription(TOGGLE).assertIsOff()
         //Then
-        composeRule.onNodeWithTag(NORMAL_TIME).assertIsDisplayed()
+        composeRule.onNodeWithContentDescription(NORMAL_TIME).assertIsDisplayed()
         verifyLampDetails(lampName = secondLampName, lampColor = secondLampColour)
         verifyLampDetails(HOUR_LAMP_COUNT, TOP_HOUR_LAMP)
         verifyLampDetails(HOUR_LAMP_COUNT, BOTTOM_HOUR_LAMP)
@@ -117,7 +117,7 @@ class ClockScreenTest {
         //When
         callShowBerlinTimeManually(inputHour, inputMin, inputSec)
         //Then
-        composeRule.onNodeWithTag(NORMAL_TIME).assertTextEquals(timeString)
+        composeRule.onNodeWithContentDescription(NORMAL_TIME).assertTextEquals(timeString)
         verifyLampDetails(lampName = secondLamp.name, lampColor = secondLamp.color)
         verifyLampDetails(topHourLamps, TOP_HOUR_LAMP)
         verifyLampDetails(bottomHourLamps, BOTTOM_HOUR_LAMP)
@@ -145,7 +145,7 @@ class ClockScreenTest {
         callShowBerlinTimeManually(inputHour, inputMin, inputSec)
         Espresso.closeSoftKeyboard()
         //Then
-        composeRule.onNodeWithTag(NORMAL_TIME).assertTextEquals(timeString)
+        composeRule.onNodeWithContentDescription(NORMAL_TIME).assertTextEquals(timeString)
         verifyLampDetails(lampName = secondLamp.name, lampColor = secondLamp.color)
         verifyLampDetails(lampName = secondLamp.name, lampColor = secondLamp.color)
         verifyLampDetails(topHourLamps, TOP_HOUR_LAMP)
@@ -176,7 +176,7 @@ class ClockScreenTest {
         every { DateTimeFormat.forPattern(any()).print(DateTime()) } returns timeString
         composeRule.onNodeWithContentDescription(TOGGLE).assertIsOn()
         //Then
-        composeRule.onNodeWithTag(NORMAL_TIME).assertTextEquals(timeString)
+        composeRule.onNodeWithContentDescription(NORMAL_TIME).assertTextEquals(timeString)
         verifyLampDetails(lampName = secondLamp.name, lampColor = secondLamp.color)
         verifyLampDetails(topHourLamps, TOP_HOUR_LAMP)
         verifyLampDetails(bottomHourLamps, BOTTOM_HOUR_LAMP)
@@ -196,7 +196,7 @@ class ClockScreenTest {
         composeRule.onNodeWithContentDescription(TOGGLE).performClick()
         composeRule.onNodeWithContentDescription(TOGGLE).assertIsOff()
         //Then
-        composeRule.onNodeWithTag(NORMAL_TIME).assertTextEquals(timeStringStop)
+        composeRule.onNodeWithContentDescription(NORMAL_TIME).assertTextEquals(timeStringStop)
         verifyLampDetails(lampName = secondLampStop.name, lampColor = secondLampStop.color)
         verifyLampDetails(topHourLampsStop, TOP_HOUR_LAMP)
         verifyLampDetails(bottomHourLampsStop, BOTTOM_HOUR_LAMP)
@@ -363,7 +363,7 @@ class ClockScreenTest {
         tagPrefix: String
     ) {
         lamps.forEachIndexed { i, lamp ->
-            composeRule.onNodeWithTag("${tagPrefix}${i}".getLampTag(lamp.name, lamp.color))
+            composeRule.onNodeWithContentDescription("${tagPrefix}${i}".getLampTag(lamp.name, lamp.color))
                 .assertIsDisplayed()
         }
     }
@@ -375,7 +375,7 @@ class ClockScreenTest {
         lampColor: String = "#FFFFFF"
     ) {
         repeat(count) {
-            composeRule.onNodeWithTag("${tagPrefix}$it".getLampTag(lampName, lampColor))
+            composeRule.onNodeWithContentDescription("${tagPrefix}$it".getLampTag(lampName, lampColor))
                 .assertIsDisplayed()
         }
     }
@@ -385,7 +385,7 @@ class ClockScreenTest {
         lampName: String,
         lampColor: String
     ) {
-        composeRule.onNodeWithTag(tagPrefix.getLampTag(lampName, lampColor)).assertIsDisplayed()
+        composeRule.onNodeWithContentDescription(tagPrefix.getLampTag(lampName, lampColor)).assertIsDisplayed()
     }
 
     private fun callShowBerlinTimeManually(
