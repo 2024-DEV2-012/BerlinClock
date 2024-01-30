@@ -103,23 +103,19 @@ class ClockScreenTest {
     }
 
     @Test
-    fun validateAllLampsAreOffWithWhiteBgColorForTheManualInput() {
+    fun validateAllLampsAreOffWithWhiteBgColorExceptSecondLampForManualInput() {
         //Given
         val inputHour = "00"
         val inputMin = "00"
-        val inputSec = "01"
-        val timeString = "00:00:01"
-        val secondLamp = LampColour.OFF
+        val inputSec = "00"
+        val timeString = "00:00:00"
+        val secondLamp = LampColour.YELLOW
         val topHourLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         val bottomHourLamps = MutableList(HOUR_LAMP_COUNT) { LampColour.OFF }
         val topMinLamps = MutableList(TOP_MIN_LAMP_COUNT) { LampColour.OFF }
         val bottomMinLamps = MutableList(BOTTOM_MIN_LAMP_COUNT) { LampColour.OFF }
         //When
-        composeRule.onNodeWithContentDescription(TOGGLE).performClick()
-        composeRule.onNodeWithContentDescription(HOUR_SELECTOR).performTextInput(inputHour)
-        composeRule.onNodeWithContentDescription(MINUTE_SELECTOR).performTextInput(inputMin)
-        composeRule.onNodeWithContentDescription(SECOND_SELECTOR).performTextInput(inputSec)
-        composeRule.onNodeWithContentDescription(SHOW_BERLIN_TIME_BUTTON).performClick()
+        callShowBerlinTImeManually(inputHour, inputMin, inputSec)
         //Then
         composeRule.onNodeWithTag(NORMAL_TIME).assertTextEquals(timeString)
         verifyLampDetails(lampName = secondLamp.name, lampColor = secondLamp.color)
@@ -146,11 +142,7 @@ class ClockScreenTest {
         }
         val bottomMinLamps = MutableList(BOTTOM_MIN_LAMP_COUNT) { LampColour.YELLOW }
         //When
-        composeRule.onNodeWithContentDescription(TOGGLE).performClick()
-        composeRule.onNodeWithContentDescription(HOUR_SELECTOR).performTextInput(inputHour)
-        composeRule.onNodeWithContentDescription(MINUTE_SELECTOR).performTextInput(inputMin)
-        composeRule.onNodeWithContentDescription(SECOND_SELECTOR).performTextInput(inputSec)
-        composeRule.onNodeWithContentDescription(SHOW_BERLIN_TIME_BUTTON).performClick()
+        callShowBerlinTImeManually(inputHour, inputMin, inputSec)
         Espresso.closeSoftKeyboard()
         //Then
         composeRule.onNodeWithTag(NORMAL_TIME).assertTextEquals(timeString)
@@ -203,7 +195,6 @@ class ClockScreenTest {
         //When - for stop scenario
         composeRule.onNodeWithContentDescription(TOGGLE).performClick()
         composeRule.onNodeWithContentDescription(TOGGLE).assertIsOff()
-        unmockkStatic(DateTimeFormat::class)
         //Then
         composeRule.onNodeWithTag(NORMAL_TIME).assertTextEquals(timeStringStop)
         verifyLampDetails(lampName = secondLampStop.name, lampColor = secondLampStop.color)
@@ -211,6 +202,7 @@ class ClockScreenTest {
         verifyLampDetails(bottomHourLampsStop, BOTTOM_HOUR_LAMP)
         verifyLampDetails(topMinLampsStop, TOP_MIN_LAMP)
         verifyLampDetails(bottomMinLampsStop, BOTTOM_MIN_LAMP)
+        unmockkStatic(DateTimeFormat::class)
     }
 
     @Test
@@ -394,6 +386,18 @@ class ClockScreenTest {
         lampColor: String
     ) {
         composeRule.onNodeWithTag(tagPrefix.getLampTag(lampName, lampColor)).assertIsDisplayed()
+    }
+
+    private fun callShowBerlinTImeManually(
+        inputHour: String,
+        inputMin: String,
+        inputSec: String
+    ) {
+        composeRule.onNodeWithContentDescription(TOGGLE).performClick()
+        composeRule.onNodeWithContentDescription(HOUR_SELECTOR).performTextInput(inputHour)
+        composeRule.onNodeWithContentDescription(MINUTE_SELECTOR).performTextInput(inputMin)
+        composeRule.onNodeWithContentDescription(SECOND_SELECTOR).performTextInput(inputSec)
+        composeRule.onNodeWithContentDescription(SHOW_BERLIN_TIME_BUTTON).performClick()
     }
 
     companion object {
